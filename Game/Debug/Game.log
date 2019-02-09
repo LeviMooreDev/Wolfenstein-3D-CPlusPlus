@@ -1,0 +1,14 @@
+﻿  Program.cpp
+e:\projects\_school\cplusplus\finalassignment\vikingengine\gameobject.h(18): warning C4251: 'GameObject::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GameObject'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\xstring(4373): note: see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+e:\projects\_school\cplusplus\finalassignment\vikingengine\scene.h(18): warning C4251: 'Scene::gameObjects': class 'std::unordered_set<GameObject,std::hash<GameObject>,std::equal_to<_Kty>,std::allocator<_Kty>>' needs to have dll-interface to be used by clients of class 'Scene'
+          with
+          [
+              _Kty=GameObject
+          ]
+  e:\projects\_school\cplusplus\finalassignment\vikingengine\scene.h(18): note: see declaration of 'std::unordered_set<GameObject,std::hash<GameObject>,std::equal_to<_Kty>,std::allocator<_Kty>>'
+          with
+          [
+              _Kty=GameObject
+          ]
+  Game.vcxproj -> E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Game.exe
