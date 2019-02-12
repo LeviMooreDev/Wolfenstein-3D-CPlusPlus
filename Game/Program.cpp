@@ -17,17 +17,22 @@ void Start(Engine * engine)
 	engine->activeScene = testScene;
 	
 	go = new GameObject();
-	//go->transform.SetPosition(new Vector3(1.5, 0, -7));
-	go->transform.SetPosition(new Vector3(1, 0, 2));
 	go->AddComponent(new MeshRenderer());
 
 	testScene->AddGameObject(go);
+
+
+	Vector3 v1 = Vector3(0, 0, 0);
+	Vector3 v2 = Vector3(0, 1, 1);
+
+
+	Debug::Log(v1.Distance(v2));
 }
 
 //runs every frame
 void GameLoop(Engine * engine)
 {
-	//go->transform.position.x+=0.001;
+	go->transform.rotation.MoveTowards(Vector3(0, 90, 0), .1);
 }
 
 //where the program enters

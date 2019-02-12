@@ -11,51 +11,48 @@ MeshRenderer::~MeshRenderer()
 
 void MeshRenderer::Update(GameObject * go)
 {
-	glLoadIdentity();
-	glTranslatef(go->transform.GetPosition().x, go->transform.GetPosition().y, go->transform.GetPosition().z);
+	GLfloat vertices[] =
+	{
+		-1, -1, -1,   -1, -1,  1,   -1,  1,  1,   -1,  1, -1,
+		1, -1, -1,    1, -1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1, -1,  1,    1, -1,  1,    1, -1, -1,
+		-1,  1, -1,   -1,  1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1,  1, -1,    1,  1, -1,    1, -1, -1,
+		-1, -1,  1,   -1,  1,  1,    1,  1,  1,    1, -1,  1
+	};
 
-	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-	  // Top face (y = 1.0f)
-	  // Define vertices in counter-clockwise (CCW) order with normal pointing out
-	glColor3f(0.0f, 1.0f, 0.0f);     // Green
-	glVertex3f(1.0f, 1.0f, -1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
+	GLfloat colors[] =
+	{
+		0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+		1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+		0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+		0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
+	};
 
-	// Bottom face (y = -1.0f)
-	glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-	glVertex3f(1.0f, -1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(1.0f, -1.0f, -1.0f);
+	glPushMatrix();
 
-	// Front face  (z = 1.0f)
-	glColor3f(1.0f, 0.0f, 0.0f);     // Red
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
+	static float alpha = 0;
+	//attempt to rotate cube
+	
+	glRotatef(go->transform.rotation.x, 1, 0, 0);
+	glRotatef(go->transform.rotation.y, 0, 1, 0);
+	glRotatef(go->transform.rotation.z, 0, 0, 1);
 
-	// Back face (z = -1.0f)
-	glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-	glVertex3f(1.0f, -1.0f, -1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);
+	/* We have a color array and a vertex array */
+	glEnableClientState(GL_VERTEX_ARRAY);
+	//glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	//glColorPointer(3, GL_FLOAT, 0, colors);
 
-	// Left face (x = -1.0f)
-	glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
+	/* Send data : 24 vertices */
+	glDrawArrays(GL_QUADS, 0, 24);
 
-	// Right face (x = 1.0f)
-	glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-	glVertex3f(1.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, -1.0f);
-	glEnd();  // End of drawing color-cube
+	/* Cleanup states */
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	alpha += 1;
+
+	glPopMatrix();
 }

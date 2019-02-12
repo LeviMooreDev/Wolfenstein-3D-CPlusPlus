@@ -17,6 +17,8 @@ public:
 	static void Log(string text);
 	//write int to visual studio output window
 	static void Log(int number);
+	//write float to visual studio output window
+	static void Log(float number);
 	//write error message to visual studio output window
 	static void Error(string error, bool stopGame = false);
 };
