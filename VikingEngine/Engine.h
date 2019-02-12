@@ -9,7 +9,7 @@ class DLLEXTERN Engine
 {
 public:
 	//the scene that is rendered
-	Scene activeScene;
+	Scene * activeScene;
 
 	Engine(string name, int height, int weight, void(*start)(Engine *), void(*gameLoop)(Engine *));
 	~Engine();

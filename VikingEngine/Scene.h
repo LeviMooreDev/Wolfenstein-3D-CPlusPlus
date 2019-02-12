@@ -15,25 +15,23 @@ private:
 	we use unordered_set instead of set because it does not matter what order the elements are in.
 	*/
 	//list of game objects in the scene
-	std::unordered_set<GameObject> gameObjects;
+	std::unordered_set<GameObject *> * gameObjects;
 
 public:
 	Scene();
 	~Scene();
 
-	//add game object to scene. You can not add the same object twice.
-	GameObject AddGameObject(GameObject go);
-
-	//remove game object from scene.
-	void RemoveGameObject(GameObject go);
-
-	//remove all game objects from scene.
-	void ClearGameObjects();
-
-	//count game objects in scene.
-	int GetGameObjectCount();
+	void UpdateGameObjects();
 
 	//returns true if the scene is empty
 	bool IsEmpty();
-};
 
+	//add game object to scene. You can not add the same object twice.
+	GameObject * AddGameObject(GameObject * go);
+	//remove game object from scene.
+	void RemoveGameObject(GameObject * go);
+	//remove all game objects from scene.
+	void ClearGameObjects();
+	//count game objects in scene.
+	int GetGameObjectCount();
+};

@@ -1,49 +1,145 @@
 #include "Engine.h"
+#include <GL/freeglut.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
 #include <windows.h>
 
-void size_resize_callback(GLFWwindow* window, int width, int height)
+///////////////////////////
+
+void KeyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+		if (key == GLFW_KEY_ESCAPE)
+			glfwSetWindowShouldClose(window, GL_TRUE);
+}
+void ResizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
+void drawCube()
+{
+	GLfloat vertices[] =
+	{
+		-1, -1, -1,   -1, -1,  1,   -1,  1,  1,   -1,  1, -1,
+		1, -1, -1,    1, -1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1, -1,  1,    1, -1,  1,    1, -1, -1,
+		-1,  1, -1,   -1,  1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1,  1, -1,    1,  1, -1,    1, -1, -1,
+		-1, -1,  1,   -1,  1,  1,    1,  1,  1,    1, -1,  1
+	};
+
+	GLfloat colors[] =
+	{
+		0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+		1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+		0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+		0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
+	};
+
+	static float alpha = 0;
+	//attempt to rotate cube
+	glRotatef(alpha, 0, 1, 0);
+
+	/* We have a color array and a vertex array */
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glColorPointer(3, GL_FLOAT, 0, colors);
+
+	/* Send data : 24 vertices */
+	glDrawArrays(GL_QUADS, 0, 24);
+
+	/* Cleanup states */
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	alpha += 1;
+}
+
+///////////////////////////
+
+
 Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void(*gameLoop)(Engine *))
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	//initialize GLFW
+	if (!glfwInit())
+	{
+		MessageBoxA(NULL, "Failed to initialize GLFW.", "Error", 0x00000000L);
+		return;
+	}
 
+	//4x antialiasing
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
+	//open a glfw window
 	GLFWwindow* window = glfwCreateWindow(weight, height, name.c_str(), NULL, NULL);
+
 	if (window == NULL)
 	{
-		MessageBoxA(NULL, "Not able to create OpenGL window", "VikignEngine Error", 0x00000000L);
+		MessageBoxA(NULL, "Failed to open GLFW window.", "Error", 0x00000000L);
 		glfwTerminate();
 		return;
 	}
-	glfwMakeContextCurrent(window);
-	glViewport(0, 0, weight, height);
-	glfwSetFramebufferSizeCallback(window, size_resize_callback);
 
+	//set window context
+	glfwMakeContextCurrent(window);
+
+	//set viewport
+	glViewport(0, 0, weight, height);
+	glfwSetFramebufferSizeCallback(window, ResizeCallback);
+
+	//setup key callback
+	glfwSetKeyCallback(window, KeyInputCallback);
+
+	glEnable(GL_DEPTH_TEST); // Depth Testing
+	glDepthFunc(GL_LEQUAL);
+	glDisable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	//run start method
 	start(this);
+
 	while (!glfwWindowShouldClose(window))
 	{
-		gameLoop(this);
+		//clear scene
+		glClearColor(0.1, 0.1, 0.1, 1.0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);  //Sætter baggrundfarven
-		glClear(GL_COLOR_BUFFER_BIT); //Nul stiller baggrunden til baggrundsfarven
+		//set perspective
+		glMatrixMode(GL_PROJECTION_MATRIX);
+		glLoadIdentity();
+		gluPerspective(60, (double)weight / (double)height, 0.1, 100);
 
-		glBegin(GL_TRIANGLES);
-		glVertex3f(-0.5f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.5f, 0.0f);
-		glVertex3f(0.5f, 0.0f, 0.0f);
-		glEnd();
+		//not sure maybe camera #########
+		glMatrixMode(GL_MODELVIEW_MATRIX);
+		glTranslatef(0, 0, -5);
 
-		glfwSwapBuffers(window); //Bruger dobbelt buffer koncept til reducering af flicker - her byttes bufferne
-		glfwPollEvents(); //Kalder evt. callback der skal reagere på keyboard eller mouse input
+		//gameLoop(this);
+		////if there is an active scene update all the game objects in it
+		//if (activeScene != nullptr)
+		//{
+		//	activeScene->UpdateGameObjects();
+		//}
+		drawCube();
+
+		//update/draw screen
+		glfwSwapBuffers(window);
+
+		//check for input
+		glfwPollEvents();
 	}
+
+	//close window
+	glfwDestroyWindow(window);
 	glfwTerminate();
+	
+	return;
 }
 Engine::~Engine()
 {
+	delete activeScene;
 }
+
+
