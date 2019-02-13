@@ -6,11 +6,10 @@ typedef std::basic_string<char> string;
 
 class GameObject;
 
-class DLLEXTERN Component
+class Component
 {
 public:
-	Component();
-	~Component();
+	bool enabled = true;
 
 	virtual void Update(GameObject * go) { };
 	virtual string GetName() { return "Component"; };

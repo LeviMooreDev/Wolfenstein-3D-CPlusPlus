@@ -5,13 +5,15 @@
 
 typedef std::basic_string<char> string;
 
-class DLLEXTERN Engine
+class Engine
 {
 public:
 	//the scene that is rendered
 	Scene * activeScene;
 
-	Engine(string name, int height, int weight, void(*start)(Engine *), void(*gameLoop)(Engine *));
-	~Engine();
+	DLLEXTERN Engine(string name, int height, int weight, void(*start)(Engine *), void(*gameLoop)(Engine *));
+	DLLEXTERN ~Engine();
+
+	DLLEXTERN void Close();
 };
 

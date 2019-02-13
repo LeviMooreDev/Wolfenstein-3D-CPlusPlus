@@ -6,7 +6,7 @@
 
 typedef std::basic_string<char> string;
 
-class DLLEXTERN GameObject
+class GameObject
 {
 private:
 	//id of the next game object that is created.
@@ -16,36 +16,32 @@ private:
 
 	//list of components the game object has on it
 	std::unordered_set<Component *> * components;
-
+	std::unordered_map<const std::type_info *, Component *>
 
 public:
 	//name of the game object.
 	string name = "NO NAME";
 	Transform transform;
 
-	GameObject();
-	~GameObject();
+	DLLEXTERN GameObject();
+	DLLEXTERN ~GameObject();
 
 	//update the game objects components.
 	void UpdateComponents();
 
 	//add game object to scene. You can not add the same object twice.
-	Component * AddComponent(Component * com);
+	DLLEXTERN Component * AddComponent(Component * com);
 	//remove game object from scene.
-	void RemoveComponent(Component * com);
+	DLLEXTERN void GetComponent(Type * com);
+	//remove game object from scene.
+	DLLEXTERN void RemoveComponent(Component * com);
 
 	//returns game object id
-	int GetId() const;
+	DLLEXTERN int GetId() const;
 
 	// == and < operators for GameObject objects. We need to use unordered_set.
-	bool operator==(const GameObject & other) const
-	{
-		return id == other.id;
-	}
-	bool operator<(const GameObject & other) const
-	{
-		return id < other.id;
-	}
+	bool operator==(const GameObject & other) const;
+	bool operator<(const GameObject & other) const;
 };
 
 // hash function for GameObject objects. We need to use unordered_set.

@@ -6,7 +6,7 @@
 #include <unordered_set> 
 #include <iterator> 
 
-class DLLEXTERN Scene
+class Scene
 {
 private:
 	/* WHY use unordered_set?
@@ -18,20 +18,20 @@ private:
 	std::unordered_set<GameObject *> * gameObjects;
 
 public:
-	Scene();
-	~Scene();
+	DLLEXTERN Scene();
+	DLLEXTERN ~Scene();
 
 	void UpdateGameObjects();
 
 	//returns true if the scene is empty
-	bool IsEmpty();
+	DLLEXTERN bool IsEmpty();
 
 	//add game object to scene. You can not add the same object twice.
-	GameObject * AddGameObject(GameObject * go);
+	DLLEXTERN GameObject * AddGameObject(GameObject * go);
 	//remove game object from scene.
-	void RemoveGameObject(GameObject * go);
+	DLLEXTERN void RemoveGameObject(GameObject * go);
 	//remove all game objects from scene.
-	void ClearGameObjects();
+	DLLEXTERN void ClearGameObjects();
 	//count game objects in scene.
-	int GetGameObjectCount();
+	DLLEXTERN int GetGameObjectCount();
 };

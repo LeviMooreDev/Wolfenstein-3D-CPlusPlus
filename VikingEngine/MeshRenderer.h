@@ -3,11 +3,15 @@
 #include "Component.h"
 #include "GameObject.h"
 
-class DLLEXTERN MeshRenderer : public Component
+class MeshRenderer : public Component
 {
+private:
+	float * vertices;
+	float * colors;
+
 public:
-	MeshRenderer();
-	~MeshRenderer();
+	DLLEXTERN MeshRenderer(float * vertices, float * colors);
+	DLLEXTERN ~MeshRenderer();
 
 	void Update(GameObject * go);
 	string GetName() { return "Mesh Renderer"; };

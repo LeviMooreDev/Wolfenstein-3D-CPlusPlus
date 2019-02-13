@@ -22,39 +22,69 @@ Vector3 Vector3::One()
 {
 	return Vector3(1, 1, 1);
 }
+Vector3 Vector3::One(float value)
+{
+	return One() * value;
+}
 Vector3 Vector3::Up()
 {
 	return Vector3(0, 1, 0);
+}
+Vector3 Vector3::Up(float value)
+{
+	return Up() * value;
 }
 Vector3 Vector3::Down()
 {
 	return Vector3(0, -1, 0);
 }
+Vector3 Vector3::Down(float value)
+{
+	return Down() * value;
+}
 Vector3 Vector3::Right()
 {
 	return Vector3(1, 0, 0);
+}
+Vector3 Vector3::Right(float value)
+{
+	return Right() * value;
 }
 Vector3 Vector3::Left()
 {
 	return Vector3(0-1, 0, 0);
 }
+Vector3 Vector3::Left(float value)
+{
+	return Left() * value;
+}
 Vector3 Vector3::Forward()
 {
 	return Vector3(0, 0, 1);
+}
+Vector3 Vector3::Forward(float value)
+{
+	return Forward() * value;
 }
 Vector3 Vector3::Back()
 {
 	return Vector3(0, 0, -1);
 }
 
+Vector3 Vector3::Back(float value)
+{
+	return Back() * value;
+}
+
 void Vector3::MoveTowards(Vector3 target, float maxDistanceDelta)
 {
 	Vector3 vector3 = target - *this;
 	float magnitude = vector3.Magnitude();
-	if (magnitude <= maxDistanceDelta || magnitude == 0.0)
+	Debug::Log(magnitude);
+	if (magnitude <= maxDistanceDelta || magnitude == 0)
 		*this = target;
-
-	*this += vector3 / magnitude * maxDistanceDelta;
+	else
+		*this += vector3 / magnitude * maxDistanceDelta;
 }
 Vector3 Vector3::Lerp(Vector3 target, float t)
 {

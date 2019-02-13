@@ -5,39 +5,78 @@
 #include <GameObject.h>
 #include <Debug.h>
 #include <MeshRenderer.h>
+#include <Time.h>
+#include <Input.h>
 
 
-Scene * testScene;
-GameObject * go;
+Scene * mainScene;
+GameObject * gameObject;
+
+float targetScale = 1;
 
 //runs once when the game start
 void Start(Engine * engine)
 {
-	testScene = new Scene();
-	engine->activeScene = testScene;
+	mainScene = new Scene();
+	engine->activeScene = mainScene;
 	
-	go = new GameObject();
-	go->AddComponent(new MeshRenderer());
+	gameObject = new GameObject();
 
-	testScene->AddGameObject(go);
+	float * vertices = new float[72]
+	{
+		-1, -1, -1,   -1, -1,  1,   -1,  1,  1,   -1,  1, -1,
+		 1, -1, -1,    1, -1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1, -1,  1,    1, -1,  1,    1, -1, -1,
+		-1,  1, -1,   -1,  1,  1,    1,  1,  1,    1,  1, -1,
+		-1, -1, -1,   -1,  1, -1,    1,  1, -1,    1, -1, -1,
+		-1, -1,  1,   -1,  1,  1,    1,  1,  1,    1, -1,  1
+	};
+	float * colors = new float[72]
+	{
+		0, 0, 0,   0, 0, 1,   0, 1, 1,   0, 1, 0,
+		1, 0, 0,   1, 0, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 0, 1,   1, 0, 1,   1, 0, 0,
+		0, 1, 0,   0, 1, 1,   1, 1, 1,   1, 1, 0,
+		0, 0, 0,   0, 1, 0,   1, 1, 0,   1, 0, 0,
+		0, 0, 1,   0, 1, 1,   1, 1, 1,   1, 0, 1
 
+	};
+	MeshRenderer * meshRenderer = new MeshRenderer(vertices, colors);
 
-	Vector3 v1 = Vector3(0, 0, 0);
-	Vector3 v2 = Vector3(0, 1, 1);
-
-
-	Debug::Log(v1.Distance(v2));
+	gameObject->AddComponent(meshRenderer);
+	mainScene->AddGameObject(gameObject);
 }
 
 //runs every frame
 void GameLoop(Engine * engine)
 {
-	go->transform.rotation.MoveTowards(Vector3(0, 90, 0), .1);
+	gameObject->transform.scale = gameObject->transform.scale.Lerp(Vector3::One(targetScale), Time::GetDeltaTime() * 2);
+	gameObject->transform.position = Vector3(sin(Time::GetTimeSinceStart()) * 1.5f, cos(Time::GetTimeSinceStart() * 3) * 1, 0);
+	gameObject->transform.rotation += Vector3::Up(90) * Time::GetDeltaTime();
+	gameObject->transform.rotation += Vector3::Right(130) * Time::GetDeltaTime();
+	gameObject->transform.rotation += Vector3::Forward(100) * Time::GetDeltaTime();
+
+	if (Input::KeyDown(Input::Keys::N1))
+	{
+		targetScale = 1;
+	}
+	if (Input::KeyDown(Input::Keys::N2))
+	{
+		targetScale = .5f;
+	}
+	if (Input::KeyDown(Input::Keys::N3))
+	{
+		targetScale = .5f;
+	}
+	if (Input::KeyDown(Input::Keys::ESCAPE))
+	{
+		engine->Close();
+	}
 }
 
 //where the program enters
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	new Engine("Game Name", 800, 600, &Start, &GameLoop);
+	new Engine("Robotenstein 3D", 800, 600, &Start, &GameLoop);
 	return 0;
 }

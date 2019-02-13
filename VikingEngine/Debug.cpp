@@ -37,6 +37,10 @@ void Debug::Log(int number)
 {
 	Log(std::to_string(number));
 }
+void Debug::Log(unsigned int number)
+{
+	Log(std::to_string(number));
+}
 void Debug::Log(float number)
 {
 	Log(std::to_string(number));

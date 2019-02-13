@@ -24,7 +24,8 @@ void GameObject::UpdateComponents()
 	std::unordered_set<Component *>::iterator com = components->begin();
 	while (com != components->end())
 	{
-		(*com)->Update(this);
+		if((*com)->enabled)
+			(*com)->Update(this);
 
 		com++;
 	}
@@ -56,4 +57,14 @@ void GameObject::RemoveComponent(Component * com)
 int GameObject::GetId() const
 {
 	return id;
+}
+
+bool GameObject::operator==(const GameObject & other) const
+{
+	return id == other.id;
+}
+
+bool GameObject::operator<(const GameObject & other) const
+{
+	return id < other.id;
 }

@@ -22,18 +22,25 @@ public:
 
 	//returns Vector3(1,1,1)
 	static Vector3 One();
+	static Vector3 One(float value);
 	//returns Vector3(0,1,0)
 	static Vector3 Up();
+	static Vector3 Up(float value);
 	//returns Vector3(0,-1,0)
 	static Vector3 Down();
+	static Vector3 Down(float value);
 	//returns Vector3(1,0,0)
 	static Vector3 Right();
+	static Vector3 Right(float value);
 	//returns Vector3(-1,0,0)
 	static Vector3 Left();
+	static Vector3 Left(float value);
 	//returns Vector3(0,0,1)
 	static Vector3 Forward();
+	static Vector3 Forward(float value);
 	//returns Vector3(0,0,-1)
 	static Vector3 Back();
+	static Vector3 Back(float value);
 
 	//move linearly towards target
 	void MoveTowards(Vector3 target, float maxDistanceDelta);

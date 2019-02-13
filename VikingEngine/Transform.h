@@ -2,7 +2,7 @@
 #include "DLLHelper.h"
 #include "Vector3.h"
 
-class DLLEXTERN Transform
+class Transform
 {
 private:
 
@@ -11,7 +11,7 @@ public:
 	Vector3 scale;
 	Vector3 rotation;
 
-	Transform();
-	~Transform();
+	DLLEXTERN Transform();
+	DLLEXTERN ~Transform();
 };
 

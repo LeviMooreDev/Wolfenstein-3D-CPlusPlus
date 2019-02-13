@@ -3,22 +3,29 @@
 #include <GLFW\glfw3.h>
 #include <iostream>
 #include <windows.h>
+#include "Time.h"
+#include "Debug.h"
+#include "Input.h"
 
-///////////////////////////
+
+GLFWwindow* window;
 
 void KeyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	if (action == GLFW_REPEAT)
+		Input::EventCollectHold(key);
+
 	if (action == GLFW_PRESS)
-		if (key == GLFW_KEY_ESCAPE)
-			glfwSetWindowShouldClose(window, GL_TRUE);
+		Input::EventCollectDown(key);
+
+	if (action == GLFW_RELEASE)
+		Input::EventCollectUp(key);
 }
+
 void ResizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
-
-///////////////////////////
-
 
 Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void(*gameLoop)(Engine *))
 {
@@ -33,7 +40,7 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	//open a glfw window
-	GLFWwindow* window = glfwCreateWindow(weight, height, name.c_str(), NULL, NULL);
+	window = glfwCreateWindow(weight, height, name.c_str(), NULL, NULL);
 
 	if (window == NULL)
 	{
@@ -57,11 +64,15 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 	glDisable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
+	Input::Setup();
+
 	//run start method
 	start(this);
 
 	while (!glfwWindowShouldClose(window))
 	{
+		Time::Update();
+
 		//clear scene
 		glClearColor(0.1, 0.1, 0.1, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -86,6 +97,7 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 		glfwSwapBuffers(window);
 
 		//check for input
+		Input::PreEventCollect();
 		glfwPollEvents();
 	}
 
@@ -100,4 +112,7 @@ Engine::~Engine()
 	delete activeScene;
 }
 
-
+void Engine::Close()
+{
+	glfwSetWindowShouldClose(window, GL_TRUE);
+}
