@@ -6,15 +6,12 @@
 #include "Time.h"
 #include "Debug.h"
 #include "Input.h"
-
+#include "Transform.h"
 
 GLFWwindow* window;
 
 void KeyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (action == GLFW_REPEAT)
-		Input::EventCollectHold(key);
-
 	if (action == GLFW_PRESS)
 		Input::EventCollectDown(key);
 
@@ -73,28 +70,40 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 	{
 		Time::Update();
 
-		//clear scene
-		glClearColor(0.1, 0.1, 0.1, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//set perspective
-		glMatrixMode(GL_PROJECTION_MATRIX);
-		glLoadIdentity();
-		gluPerspective(60, (double)weight / (double)height, 0.1, 100);
-
-		//not sure maybe camera #########
-		glMatrixMode(GL_MODELVIEW_MATRIX);
-		glTranslatef(0, 0, -5);
-
-		gameLoop(this);
-		//if there is an active scene update all the game objects in it
-		if (activeScene != nullptr)
+		if (activeScene == nullptr)
 		{
-			activeScene->UpdateGameObjects();
+			glClearColor(1, 1, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			return;
+		}
+		if (activeScene->GetActiveCamera() != nullptr)
+		{
+			Camera * camera = activeScene->GetActiveCamera();
+			
+			//clear scene
+			glClearColor(camera->backgroundColor.R1(), camera->backgroundColor.G1(), camera->backgroundColor.B1(), camera->backgroundColor.A1());
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			//set perspective
+			glMatrixMode(GL_PROJECTION_MATRIX);
+			glLoadIdentity();
+			gluPerspective(camera->fov, (double)weight / (double)height, camera->nearClip, camera->farClip);
+
+			//not sure maybe camera #########
+			glMatrixMode(GL_MODELVIEW_MATRIX);
+
+			Vector3 cameraPosition = camera->GetParentGameObject()->transform.position;
+			glTranslatef(cameraPosition.x, cameraPosition.y, cameraPosition.z);
 		}
 
-		//update/draw screen
-		glfwSwapBuffers(window);
+		gameLoop(this);
+		activeScene->UpdateGameObjects();
+
+		if (activeScene->GetActiveCamera() != nullptr)
+		{
+			//update/draw screen
+			glfwSwapBuffers(window);
+		}
 
 		//check for input
 		Input::PreEventCollect();

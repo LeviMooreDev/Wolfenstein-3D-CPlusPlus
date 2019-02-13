@@ -16,10 +16,20 @@ void Scene::UpdateGameObjects()
 	std::unordered_set<GameObject *>::iterator go = gameObjects->begin();
 	while (go != gameObjects->end())
 	{
-		(*go)->UpdateComponents();
+		(*go)->UpdateComponents(this);
 
 		go++;
 	}
+}
+
+void Scene::SetActiveCamera(Camera * camera)
+{
+	activeCamera = camera;
+}
+
+Camera * Scene::GetActiveCamera()
+{
+	return activeCamera;
 }
 
 GameObject * Scene::AddGameObject(GameObject *go)

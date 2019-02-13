@@ -1,6 +1,7 @@
 #pragma once
 #include "DLLHelper.h"
 #include "GameObject.h"
+#include "Camera.h"
 
 #include <iostream>
 #include <unordered_set> 
@@ -17,11 +18,16 @@ private:
 	//list of game objects in the scene
 	std::unordered_set<GameObject *> * gameObjects;
 
+	Camera * activeCamera;
+
 public:
 	DLLEXTERN Scene();
 	DLLEXTERN ~Scene();
 
 	void UpdateGameObjects();
+
+	void SetActiveCamera(Camera * camera);
+	Camera * GetActiveCamera();
 
 	//returns true if the scene is empty
 	DLLEXTERN bool IsEmpty();

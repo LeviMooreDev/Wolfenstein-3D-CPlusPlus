@@ -179,6 +179,8 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -191,6 +193,8 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Engine.h" />

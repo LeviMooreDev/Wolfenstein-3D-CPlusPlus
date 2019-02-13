@@ -34,10 +34,6 @@ void Input::Setup()
 void Input::PreEventCollect()
 {
 	std::map<int, bool>::iterator c_itr;
-	for (c_itr = hold.begin(); c_itr != hold.end(); ++c_itr)
-	{
-		Input::hold[c_itr->first] = false;
-	}
 	for (c_itr = down.begin(); c_itr != down.end(); ++c_itr)
 	{
 		Input::down[c_itr->first] = false;
@@ -47,15 +43,13 @@ void Input::PreEventCollect()
 		Input::up[c_itr->first] = false;
 	}
 }
-void Input::EventCollectHold(int key)
-{
-	Input::hold[key] = true;
-}
 void Input::EventCollectDown(int key)
 {
 	Input::down[key] = true;
+	Input::hold[key] = true;
 }
 void Input::EventCollectUp(int key)
 {
 	Input::up[key] = true;
+	Input::hold[key] = false;
 }

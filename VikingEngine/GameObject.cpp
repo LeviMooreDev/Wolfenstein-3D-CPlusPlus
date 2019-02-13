@@ -2,6 +2,7 @@
 #include "Debug.h"
 #include <typeinfo>
 #include "Component.h"
+#include "Scene.h"
 
 int GameObject::nextId = 0;
 
@@ -19,13 +20,13 @@ GameObject::~GameObject()
 	delete components;
 }
 
-void GameObject::UpdateComponents()
+void GameObject::UpdateComponents(Scene * scene)
 {
 	std::unordered_map<string, Component *>::iterator com = components->begin();
 	while (com != components->end())
 	{
 		if(com->second->enabled)
-			com->second->Update(this);
+			com->second->V_Update(scene);
 
 		com++;
 	}
@@ -39,6 +40,7 @@ Component * GameObject::AddComponent(Component * com)
 		return com;
 	}
 
+	com->SetParentGameObject(this);
 	components->insert(std::pair<string, Component *>(com->GetName(), com));
 	return com;
 }
@@ -62,6 +64,7 @@ void GameObject::RemoveComponent(Component * com)
 		return;
 	}
 
+	com->RemoveParentGameObject();
 	components->erase(com->GetName());
 }
 

@@ -1,11 +1,13 @@
 #pragma once
 #include "DLLHelper.h"
-#include <unordered_map>
 #include "Component.h"
 #include "Transform.h"
+#include <unordered_map>
 #include <iostream>
 
 typedef std::basic_string<char> string;
+
+class Scene;
 
 class GameObject
 {
@@ -28,7 +30,7 @@ public:
 	DLLEXTERN ~GameObject();
 
 	//update the game objects components.
-	void UpdateComponents();
+	void UpdateComponents(Scene * scene);
 
 	//add game object to scene. You can not add the same object twice.
 	DLLEXTERN Component * AddComponent(Component * com);

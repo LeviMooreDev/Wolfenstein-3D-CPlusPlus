@@ -18,20 +18,20 @@ MeshRenderer::~MeshRenderer()
 	delete colors;
 }
 
-void MeshRenderer::Update(GameObject * go)
+void MeshRenderer::Update(Scene * scene)
 {
 	glPushMatrix();
 
 	//position
-	glTranslatef(go->transform.position.x, go->transform.position.y, go->transform.position.z);
+	glTranslatef(gameObject->transform.position.x, gameObject->transform.position.y, gameObject->transform.position.z);
 
 	//rotation
-	glRotatef(go->transform.rotation.x, 1, 0, 0);
-	glRotatef(go->transform.rotation.y, 0, 1, 0);
-	glRotatef(go->transform.rotation.z, 0, 0, 1);
+	glRotatef(gameObject->transform.rotation.x, 1, 0, 0);
+	glRotatef(gameObject->transform.rotation.y, 0, 1, 0);
+	glRotatef(gameObject->transform.rotation.z, 0, 0, 1);
 
 	//scale
-	glScalef(go->transform.scale.x, go->transform.scale.y, go->transform.scale.z);
+	glScalef(gameObject->transform.scale.x, gameObject->transform.scale.y, gameObject->transform.scale.z);
 
 	/* We have a color array and a vertex array */
 	glEnableClientState(GL_VERTEX_ARRAY);

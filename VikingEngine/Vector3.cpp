@@ -28,7 +28,7 @@ Vector3 Vector3::One(float value)
 }
 Vector3 Vector3::Up()
 {
-	return Vector3(0, 1, 0);
+	return Vector3(0, -1, 0);
 }
 Vector3 Vector3::Up(float value)
 {
@@ -36,7 +36,7 @@ Vector3 Vector3::Up(float value)
 }
 Vector3 Vector3::Down()
 {
-	return Vector3(0, -1, 0);
+	return Vector3(0, 1, 0);
 }
 Vector3 Vector3::Down(float value)
 {
@@ -44,7 +44,7 @@ Vector3 Vector3::Down(float value)
 }
 Vector3 Vector3::Right()
 {
-	return Vector3(1, 0, 0);
+	return Vector3(-1, 0, 0);
 }
 Vector3 Vector3::Right(float value)
 {
@@ -52,7 +52,7 @@ Vector3 Vector3::Right(float value)
 }
 Vector3 Vector3::Left()
 {
-	return Vector3(0-1, 0, 0);
+	return Vector3(1, 0, 0);
 }
 Vector3 Vector3::Left(float value)
 {

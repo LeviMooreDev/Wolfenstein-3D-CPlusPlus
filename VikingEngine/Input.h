@@ -141,7 +141,6 @@ public:
 
 	static void Setup();
 	static void PreEventCollect();
-	static void EventCollectHold(int key);
 	static void EventCollectDown(int key);
 	static void EventCollectUp(int key);
 };

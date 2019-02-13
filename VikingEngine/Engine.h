@@ -2,6 +2,7 @@
 #include "DLLHelper.h"
 #include "Scene.h"
 #include <iostream>
+#include "Camera.h"
 
 typedef std::basic_string<char> string;
 

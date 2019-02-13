@@ -8,13 +8,13 @@ class MeshRenderer : public Component
 private:
 	float * vertices;
 	float * colors;
+	void Update(Scene * scene);
 
 public:
 	DLLEXTERN MeshRenderer();
 	DLLEXTERN MeshRenderer(float * vertices, float * colors);
 	DLLEXTERN ~MeshRenderer();
 
-	void Update(GameObject * go);
 	string GetName() { return "Mesh Renderer"; };
 };
 
