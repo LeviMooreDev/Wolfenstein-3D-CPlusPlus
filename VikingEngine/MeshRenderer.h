@@ -10,6 +10,7 @@ private:
 	float * colors;
 
 public:
+	DLLEXTERN MeshRenderer();
 	DLLEXTERN MeshRenderer(float * vertices, float * colors);
 	DLLEXTERN ~MeshRenderer();
 

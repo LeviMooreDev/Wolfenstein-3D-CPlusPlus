@@ -1,8 +1,9 @@
 #pragma once
 #include "DLLHelper.h"
-#include <unordered_set>
+#include <unordered_map>
 #include "Component.h"
 #include "Transform.h"
+#include <iostream>
 
 typedef std::basic_string<char> string;
 
@@ -15,8 +16,8 @@ private:
 	int id;
 
 	//list of components the game object has on it
-	std::unordered_set<Component *> * components;
-	std::unordered_map<const std::type_info *, Component *>
+	//I use a map so I can find a component by its type later
+	std::unordered_map<string, Component *> * components;
 
 public:
 	//name of the game object.
@@ -31,8 +32,10 @@ public:
 
 	//add game object to scene. You can not add the same object twice.
 	DLLEXTERN Component * AddComponent(Component * com);
+
 	//remove game object from scene.
-	DLLEXTERN void GetComponent(Type * com);
+	DLLEXTERN Component * GetComponent(string name);
+
 	//remove game object from scene.
 	DLLEXTERN void RemoveComponent(Component * com);
 

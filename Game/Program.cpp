@@ -66,7 +66,7 @@ void GameLoop(Engine * engine)
 	}
 	if (Input::KeyDown(Input::Keys::N3))
 	{
-		targetScale = .5f;
+		gameObject->GetComponent(MeshRenderer().GetName())->enabled = !gameObject->GetComponent(MeshRenderer().GetName())->enabled;
 	}
 	if (Input::KeyDown(Input::Keys::ESCAPE))
 	{

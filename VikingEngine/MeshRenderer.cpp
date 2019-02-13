@@ -2,6 +2,11 @@
 #include "Debug.h"
 #include <GLFW\glfw3.h>
 
+MeshRenderer::MeshRenderer()
+{
+	(*this).vertices = nullptr;
+	(*this).colors = nullptr;
+}
 MeshRenderer::MeshRenderer(float * vertices, float * colors)
 {
 	(*this).vertices = vertices;
