@@ -7,8 +7,9 @@ MeshRenderer::MeshRenderer()
 	(*this).vertices = nullptr;
 	(*this).colors = nullptr;
 }
-MeshRenderer::MeshRenderer(float * vertices, float * colors)
+MeshRenderer::MeshRenderer(float * vertices, float * colors, int verticesCount)
 {
+	(*this).verticesCount = verticesCount;
 	(*this).vertices = vertices;
 	(*this).colors = colors;
 }
@@ -18,11 +19,12 @@ MeshRenderer::~MeshRenderer()
 	delete colors;
 }
 
-void MeshRenderer::Update(Scene * scene)
+void MeshRenderer::Draw(Scene * scene)
 {
 	glPushMatrix();
 
 	//position
+	//we flip the z position so +1 in z is going into the screen.
 	glTranslatef(gameObject->transform.position.x, gameObject->transform.position.y, gameObject->transform.position.z);
 
 	//rotation
@@ -39,8 +41,9 @@ void MeshRenderer::Update(Scene * scene)
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glColorPointer(3, GL_FLOAT, 0, colors);
 
-	/* Send data : 24 vertices */
-	glDrawArrays(GL_QUADS, 0, 24);
+	/* Send data */
+	//glDrawArrays(GL_QUADS, 0, 24);
+	glDrawArrays(GL_QUADS, 0, verticesCount);
 
 	/* Cleanup states */
 	glDisableClientState(GL_COLOR_ARRAY);

@@ -1,123 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Components">
+    <Filter Include="Components">
       <UniqueIdentifier>{194044bb-dd96-461c-8369-087880831342}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components">
-      <UniqueIdentifier>{bf30f4ba-5996-4eff-a3bb-ba3636b016ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Static">
-      <UniqueIdentifier>{0611b9cb-96f6-445b-b7f4-5bff25f86c59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Static">
-      <UniqueIdentifier>{8d6fee2f-15ee-451a-9a3f-e533cc0c58ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Data Types">
-      <UniqueIdentifier>{90148f25-5c9d-4e95-850e-00adf06a5d3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Data Types">
-      <UniqueIdentifier>{098637e3-051e-458d-8b23-c8dd9d0e0f7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core">
+    <Filter Include="Core">
       <UniqueIdentifier>{71136ec9-5506-4fad-9b23-3599b6407aef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{ba52500b-4a39-4ea2-be90-d53e5cfd1b86}</UniqueIdentifier>
+    <Filter Include="Data Types">
+      <UniqueIdentifier>{90148f25-5c9d-4e95-850e-00adf06a5d3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Helper">
+    <Filter Include="Helper">
       <UniqueIdentifier>{ccb8260e-c22f-4692-b66b-4613c4a854bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Static">
+      <UniqueIdentifier>{0611b9cb-96f6-445b-b7f4-5bff25f86c59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="MeshRenderer.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Debug.h">
-      <Filter>Header Files\Static</Filter>
+      <Filter>Static</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>Header Files\Static</Filter>
+      <Filter>Static</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
-      <Filter>Header Files\Static</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files\Data Types</Filter>
+      <Filter>Static</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="DLLHelper.h">
-      <Filter>Header Files\Helper</Filter>
+      <Filter>Helper</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
-      <Filter>Header Files\Data Types</Filter>
+      <Filter>Data Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Data Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Data Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Components</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="MeshRenderer.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug.cpp">
-      <Filter>Source Files\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Source Files\Data Types</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
-      <Filter>Source Files\Data Types</Filter>
+      <Filter>Data Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Data Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Data Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Static</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Static</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Static</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include <GL/freeglut.h>
+#include <GLFW\glfw3.h>
 #include "Debug.h"
 #include <exception>
 
@@ -21,15 +23,20 @@ void Scene::UpdateGameObjects()
 		go++;
 	}
 }
-
-void Scene::SetActiveCamera(Camera * camera)
+void Scene::DrawCamera()
 {
-	activeCamera = camera;
+	if (activeCamera != nullptr)
+		activeCamera->DrawViewport();
 }
-
-Camera * Scene::GetActiveCamera()
+void Scene::DrawGameObjects()
 {
-	return activeCamera;
+	std::unordered_set<GameObject *>::iterator go = gameObjects->begin();
+	while (go != gameObjects->end())
+	{
+		(*go)->DrawComponents(this);
+
+		go++;
+	}
 }
 
 GameObject * Scene::AddGameObject(GameObject *go)
@@ -43,7 +50,6 @@ GameObject * Scene::AddGameObject(GameObject *go)
 	gameObjects->insert(go);
 	return go;
 }
-
 void Scene::RemoveGameObject(GameObject * go)
 {
 	if (gameObjects->count(go) != 1)
@@ -54,12 +60,10 @@ void Scene::RemoveGameObject(GameObject * go)
 
 	gameObjects->erase(go);
 }
-
 void Scene::ClearGameObjects()
 {
 	gameObjects->clear();
 }
-
 int Scene::GetGameObjectCount()
 {
 	return gameObjects->size();

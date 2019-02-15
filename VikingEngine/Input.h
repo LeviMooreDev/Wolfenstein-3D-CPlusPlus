@@ -1,16 +1,23 @@
 #pragma once
 #include "DLLHelper.h"
+#include "Vector2.h"
 #include <iostream> 
 #include <iterator> 
 #include <map>
 
+struct GLFWwindow;
 class Input
 {
 private:
+	static Vector2 currentMousePosition;
+	static Vector2 lastMousePosition;
+	static GLFWwindow * window;
 	static std::map<int, bool> hold;
 	static std::map<int, bool> down;
 	static std::map<int, bool> up;
 
+	static void KeyInputCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
+	static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
 public:
 	enum Keys
 	{
@@ -139,8 +146,12 @@ public:
 	DLLEXTERN static bool KeyUp(Keys key);
 	DLLEXTERN static bool KeyDown(Keys key);
 
-	static void Setup();
-	static void PreEventCollect();
-	static void EventCollectDown(int key);
-	static void EventCollectUp(int key);
+	DLLEXTERN static Vector2 MousePosition();
+	DLLEXTERN static Vector2 MouseMoveDirection();
+
+	DLLEXTERN static void ShowCursor();
+	DLLEXTERN static void HideCursor();
+
+	static void Setup(GLFWwindow * window);
+	static void EndLoop();
 };

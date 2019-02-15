@@ -7,7 +7,7 @@
 class Camera : public Component
 {
 private:
-	bool setAsActive;
+	bool use;
 	void Update(Scene * scene);
 
 public:
@@ -16,8 +16,11 @@ public:
 	float nearClip = 0.1f;
 	float farClip = 100.0f;
 
-	DLLEXTERN Camera(bool setAsActive = false);
+	DLLEXTERN Camera(bool use = false);
 	DLLEXTERN ~Camera();
+
+	DLLEXTERN void Use();
+	void DrawViewport();
 
 	string GetName() { return "Camera"; };
 };

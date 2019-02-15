@@ -7,11 +7,6 @@ typedef std::basic_string<char> string;
 class DLLEXTERN Vector3
 {
 public:
-	enum Pivot
-	{
-		X,Y,Z
-	};
-
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -58,8 +53,17 @@ public:
 
 	//returns this vector with a magnitude of 1
 	Vector3 Normalized();
-	//makes this vector have a magnitude of 1.
+	//makes this vector have a magnitude of 1
 	void Normalize();
+
+	//returns cross product of two vectors
+	static Vector3 Cross(Vector3 lhs, Vector3 rhs);
+
+	//return dot product of two vectors
+	static float Dot(Vector3 lhs, Vector3 rhs);
+
+	//returns a copy of the vector rotated around an axis
+	Vector3 Rotate(Vector3 axis, float degrees);
 
 	bool operator==(const Vector3 & other) const;
 	bool operator!=(const Vector3 & other) const;

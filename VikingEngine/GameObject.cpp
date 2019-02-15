@@ -25,9 +25,16 @@ void GameObject::UpdateComponents(Scene * scene)
 	std::unordered_map<string, Component *>::iterator com = components->begin();
 	while (com != components->end())
 	{
-		if(com->second->enabled)
-			com->second->V_Update(scene);
-
+		com->second->V_Update(scene);
+		com++;
+	}
+}
+void GameObject::DrawComponents(Scene * scene)
+{
+	std::unordered_map<string, Component *>::iterator com = components->begin();
+	while (com != components->end())
+	{
+		com->second->V_Draw(scene);
 		com++;
 	}
 }

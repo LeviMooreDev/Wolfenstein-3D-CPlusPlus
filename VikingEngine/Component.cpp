@@ -6,11 +6,6 @@ void Component::SetParentGameObject(GameObject * gameObject)
 	(*this).gameObject = gameObject;
 }
 
-GameObject * Component::GetParentGameObject()
-{
-	return gameObject;
-}
-
 void Component::RemoveParentGameObject()
 {
 	gameObject = nullptr;
@@ -18,5 +13,12 @@ void Component::RemoveParentGameObject()
 
 void Component::V_Update(Scene * scene)
 {
-	Update(scene);
+	if(enabled)
+		Update(scene);
+}
+
+void Component::V_Draw(Scene * scene)
+{
+	if (enabled)
+		Draw(scene);
 }

@@ -18,16 +18,15 @@ private:
 	//list of game objects in the scene
 	std::unordered_set<GameObject *> * gameObjects;
 
+public:
 	Camera * activeCamera;
 
-public:
 	DLLEXTERN Scene();
 	DLLEXTERN ~Scene();
 
 	void UpdateGameObjects();
-
-	void SetActiveCamera(Camera * camera);
-	Camera * GetActiveCamera();
+	void DrawCamera();
+	void DrawGameObjects();
 
 	//returns true if the scene is empty
 	DLLEXTERN bool IsEmpty();

@@ -28,7 +28,7 @@ Vector3 Vector3::One(float value)
 }
 Vector3 Vector3::Up()
 {
-	return Vector3(0, -1, 0);
+	return Vector3(0, 1, 0);
 }
 Vector3 Vector3::Up(float value)
 {
@@ -36,7 +36,7 @@ Vector3 Vector3::Up(float value)
 }
 Vector3 Vector3::Down()
 {
-	return Vector3(0, 1, 0);
+	return Vector3(0, -1, 0);
 }
 Vector3 Vector3::Down(float value)
 {
@@ -44,7 +44,7 @@ Vector3 Vector3::Down(float value)
 }
 Vector3 Vector3::Right()
 {
-	return Vector3(-1, 0, 0);
+	return Vector3(1, 0, 0);
 }
 Vector3 Vector3::Right(float value)
 {
@@ -52,7 +52,7 @@ Vector3 Vector3::Right(float value)
 }
 Vector3 Vector3::Left()
 {
-	return Vector3(1, 0, 0);
+	return Vector3(-1, 0, 0);
 }
 Vector3 Vector3::Left(float value)
 {
@@ -80,7 +80,7 @@ void Vector3::MoveTowards(Vector3 target, float maxDistanceDelta)
 {
 	Vector3 vector3 = target - *this;
 	float magnitude = vector3.Magnitude();
-	Debug::Log(magnitude);
+
 	if (magnitude <= maxDistanceDelta || magnitude == 0)
 		*this = target;
 	else
@@ -121,6 +121,26 @@ void Vector3::Normalize()
 		*this = *this / num;
 	else
 		*this = Vector3();
+}
+
+Vector3 Vector3::Cross(Vector3 lhs, Vector3 rhs)
+{
+	return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x);
+}
+
+float Vector3::Dot(Vector3 lhs, Vector3 rhs)
+{
+	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+}
+
+Vector3 Vector3::Rotate(Vector3 axis, float degrees)
+{
+	double theta = (degrees * 3.14159265358979323846) / 180.0f;
+
+	double cos_theta = cos(theta);
+	double sin_theta = sin(theta);
+
+	return ((*this) * cos_theta) + (Vector3::Cross(axis, (*this)) * sin_theta) + (axis * Vector3::Dot(axis, (*this))) * (1.0f - cos_theta);
 }
 
 bool Vector3::operator==(const Vector3 & other) const

@@ -32,6 +32,9 @@ public:
 	//update the game objects components.
 	void UpdateComponents(Scene * scene);
 
+	//draw the game objects components.
+	void DrawComponents(Scene * scene);
+
 	//add game object to scene. You can not add the same object twice.
 	DLLEXTERN Component * AddComponent(Component * com);
 

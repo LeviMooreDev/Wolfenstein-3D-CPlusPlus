@@ -19,12 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraMovement.cpp" />
+    <ClCompile Include="DemoCubeMovement.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VikingEngine\VikingEngine.vcxproj">
       <Project>{1b24ae18-7dc0-4582-80e6-de773a859a32}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CameraMovement.h" />
+    <ClInclude Include="DemoCubeMovement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -1,9 +1,15 @@
+#pragma once
 #include "Input.h"
+#include <GLFW\glfw3.h>
+#include "Debug.h"
 #include <iostream> 
 #include <iterator> 
 #include <map>
-#include "Debug.h"
+#include "Engine.h"
 
+Vector2 Input::currentMousePosition;
+Vector2 Input::lastMousePosition;
+GLFWwindow * Input::window;
 std::map<int, bool> Input::hold = std::map<int, bool>();
 std::map<int, bool> Input::down = std::map<int, bool>();
 std::map<int, bool> Input::up	= std::map<int, bool>();
@@ -21,8 +27,50 @@ bool Input::KeyHold(Keys key)
 	return Input::hold[key];
 }
 
-void Input::Setup()
+Vector2 Input::MousePosition()
 {
+	return currentMousePosition;
+}
+
+Vector2 Input::MouseMoveDirection()
+{
+	return (currentMousePosition - lastMousePosition);
+}
+
+void Input::ShowCursor()
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void Input::HideCursor()
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void Input::KeyInputCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	if (action == GLFW_PRESS)
+	{
+		Input::down[key] = true;
+		Input::hold[key] = true;
+	}
+	if (action == GLFW_RELEASE)
+	{
+		Input::up[key] = true;
+		Input::hold[key] = false;
+	}
+}
+void Input::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	currentMousePosition = Vector2((float)xpos, Engine::I()->GetWindowSize().y - (float)ypos);
+}
+
+void Input::Setup(GLFWwindow * window)
+{
+	Input::window = window;
+	glfwSetKeyCallback(window, Input::KeyInputCallback);
+	glfwSetCursorPosCallback(window, CursorPositionCallback);
+
 	for (int i = Input::Keys::A; i != Input::Keys::MENU; i++)
 	{
 		Input::Keys key = static_cast<Input::Keys>(i);
@@ -31,8 +79,10 @@ void Input::Setup()
 		Input::up.insert(std::pair<int, bool>((int)key, false));
 	}
 }
-void Input::PreEventCollect()
+
+void Input::EndLoop()
 {
+	//keys
 	std::map<int, bool>::iterator c_itr;
 	for (c_itr = down.begin(); c_itr != down.end(); ++c_itr)
 	{
@@ -42,14 +92,9 @@ void Input::PreEventCollect()
 	{
 		Input::up[c_itr->first] = false;
 	}
-}
-void Input::EventCollectDown(int key)
-{
-	Input::down[key] = true;
-	Input::hold[key] = true;
-}
-void Input::EventCollectUp(int key)
-{
-	Input::up[key] = true;
-	Input::hold[key] = false;
+
+	//mouse
+	lastMousePosition = currentMousePosition;
+
+	glfwPollEvents();
 }

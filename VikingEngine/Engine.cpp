@@ -7,25 +7,24 @@
 #include "Debug.h"
 #include "Input.h"
 #include "Transform.h"
+#include "Vector2.h"
 
+Engine * Engine::i;
 GLFWwindow* window;
-
-void KeyInputCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (action == GLFW_PRESS)
-		Input::EventCollectDown(key);
-
-	if (action == GLFW_RELEASE)
-		Input::EventCollectUp(key);
-}
 
 void ResizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void(*gameLoop)(Engine *))
+Engine * Engine::I()
 {
+	return i;
+}
+
+Engine::Engine(string name, int width, int height, void (*start)(), void (*gameLoop)())
+{
+	i = this;
 	//initialize GLFW
 	if (!glfwInit())
 	{
@@ -34,10 +33,13 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 	}
 
 	//4x antialiasing
-	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_SAMPLES, 16);
+
+	windowWidth = width;
+	windowHeight = height;
 
 	//open a glfw window
-	window = glfwCreateWindow(weight, height, name.c_str(), NULL, NULL);
+	window = glfwCreateWindow(windowWidth, windowHeight, name.c_str(), NULL, NULL);
 
 	if (window == NULL)
 	{
@@ -50,21 +52,18 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 	glfwMakeContextCurrent(window);
 
 	//set viewport
-	glViewport(0, 0, weight, height);
+	glViewport(0, 0, windowWidth, windowHeight);
 	glfwSetFramebufferSizeCallback(window, ResizeCallback);
-
-	//setup key callback
-	glfwSetKeyCallback(window, KeyInputCallback);
 
 	glEnable(GL_DEPTH_TEST); // Depth Testing
 	glDepthFunc(GL_LEQUAL);
 	glDisable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
-	Input::Setup();
+	Input::Setup(window);
 
 	//run start method
-	start(this);
+	start();
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -76,38 +75,16 @@ Engine::Engine(string name, int weight, int height, void(*start)(Engine *), void
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			return;
 		}
-		if (activeScene->GetActiveCamera() != nullptr)
-		{
-			Camera * camera = activeScene->GetActiveCamera();
-			
-			//clear scene
-			glClearColor(camera->backgroundColor.R1(), camera->backgroundColor.G1(), camera->backgroundColor.B1(), camera->backgroundColor.A1());
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			//set perspective
-			glMatrixMode(GL_PROJECTION_MATRIX);
-			glLoadIdentity();
-			gluPerspective(camera->fov, (double)weight / (double)height, camera->nearClip, camera->farClip);
-
-			//not sure maybe camera #########
-			glMatrixMode(GL_MODELVIEW_MATRIX);
-
-			Vector3 cameraPosition = camera->GetParentGameObject()->transform.position;
-			glTranslatef(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-		}
-
-		gameLoop(this);
+		gameLoop();
+		glLoadIdentity();
 		activeScene->UpdateGameObjects();
+		activeScene->DrawCamera();
+		activeScene->DrawGameObjects();
 
-		if (activeScene->GetActiveCamera() != nullptr)
-		{
-			//update/draw screen
-			glfwSwapBuffers(window);
-		}
+		glfwSwapBuffers(window);
 
-		//check for input
-		Input::PreEventCollect();
-		glfwPollEvents();
+		Input::EndLoop();
 	}
 
 	//close window
@@ -124,4 +101,9 @@ Engine::~Engine()
 void Engine::Close()
 {
 	glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+Vector2 Engine::GetWindowSize()
+{
+	return Vector2((float)windowWidth, (float)windowHeight);
 }
