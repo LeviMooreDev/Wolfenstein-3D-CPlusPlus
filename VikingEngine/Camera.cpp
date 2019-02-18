@@ -28,8 +28,11 @@ void Camera::Update(Scene * scene)
 		scene->activeCamera = this;
 	}
 }
-void Camera::DrawViewport()
+void Camera::Draw1(Scene * scene)
 {
+	if (scene->activeCamera != this)
+		return;
+
 	//clear scene
 	glClearColor(backgroundColor.R1(), backgroundColor.G1(), backgroundColor.B1(), backgroundColor.A1());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -37,8 +40,7 @@ void Camera::DrawViewport()
 	//set perspective
 	glMatrixMode(GL_PROJECTION_MATRIX);
 	gluPerspective(fov, (double)Engine::I()->GetWindowSize().x / (double)Engine::I()->GetWindowSize().y, nearClip, farClip);
-
-	//not sure maybe camera #########
+	
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 
 	//rotation

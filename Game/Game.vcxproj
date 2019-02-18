@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraMovement.cpp" />
-    <ClCompile Include="DemoCubeMovement.cpp" />
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FreeCameraMovement.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -29,8 +31,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraMovement.h" />
-    <ClInclude Include="DemoCubeMovement.h" />
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FreeCameraMovement.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -107,8 +111,12 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>mkdir "$(TargetDir)Textures\";
+mkdir "$(TargetDir)Levels\";
+mkdir "$(TargetDir)Audio\";
+copy /Y "$(ProjectDir)Textures\" "$(TargetDir)Textures\";
+copy /Y "$(ProjectDir)Levels\" "$(TargetDir)Levels\";
+copy /Y "$(ProjectDir)Audio\" "$(TargetDir)Audio\";</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,8 +131,12 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>mkdir "$(TargetDir)Textures\";
+mkdir "$(TargetDir)Levels\";
+mkdir "$(TargetDir)Audio\";
+copy /Y "$(ProjectDir)Textures\" "$(TargetDir)Textures\";
+copy /Y "$(ProjectDir)Levels\" "$(TargetDir)Levels\";
+copy /Y "$(ProjectDir)Audio\" "$(TargetDir)Audio\";</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,8 +155,12 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>mkdir "$(TargetDir)Textures\";
+mkdir "$(TargetDir)Levels\";
+mkdir "$(TargetDir)Audio\";
+copy /Y "$(ProjectDir)Textures\" "$(TargetDir)Textures\";
+copy /Y "$(ProjectDir)Levels\" "$(TargetDir)Levels\";
+copy /Y "$(ProjectDir)Audio\" "$(TargetDir)Audio\";</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,8 +179,12 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>mkdir "$(TargetDir)Textures\";
+mkdir "$(TargetDir)Levels\";
+mkdir "$(TargetDir)Audio\";
+copy /Y "$(ProjectDir)Textures\" "$(TargetDir)Textures\";
+copy /Y "$(ProjectDir)Levels\" "$(TargetDir)Levels\";
+copy /Y "$(ProjectDir)Audio\" "$(TargetDir)Audio\";</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

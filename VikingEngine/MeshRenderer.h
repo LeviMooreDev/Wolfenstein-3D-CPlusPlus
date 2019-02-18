@@ -6,15 +6,33 @@
 class MeshRenderer : public Component
 {
 private:
-	float * vertices;
+	unsigned int texture;
+	float * texture_coord;
+	bool useTexture;
+	bool useAlpha;
+
 	float * colors;
+	bool useColor;
+
+	float * vertices;
 	int verticesCount;
-	void Draw(Scene * scene);
+	bool hasVertices;
+
+	void Draw();
+	void Draw1(Scene * scene);
+	void Draw2(Scene * scene);
 
 public:
+	DLLEXTERN static bool showWireframe;
+
 	DLLEXTERN MeshRenderer();
-	DLLEXTERN MeshRenderer(float * vertices, float * colors, int verticesCount);
 	DLLEXTERN ~MeshRenderer();
+
+	DLLEXTERN void SetVertices(float * vertices, int verticesCount);
+	DLLEXTERN void SetTexture(string texture, float * texture_coord, bool useAlpha);
+	DLLEXTERN void SetColor(float * colors);
+	DLLEXTERN void SetColor(float color);
+	DLLEXTERN void SetColor(float r, float g, float b);
 
 	string GetName() { return "Mesh Renderer"; };
 };

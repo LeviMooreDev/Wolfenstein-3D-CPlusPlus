@@ -6,6 +6,7 @@
 #include <iterator> 
 #include <map>
 #include "Engine.h"
+#include "Time.h"
 
 Vector2 Input::currentMousePosition;
 Vector2 Input::lastMousePosition;
@@ -34,7 +35,7 @@ Vector2 Input::MousePosition()
 
 Vector2 Input::MouseMoveDirection()
 {
-	return (currentMousePosition - lastMousePosition);
+	return currentMousePosition - lastMousePosition;
 }
 
 void Input::ShowCursor()
@@ -63,6 +64,8 @@ void Input::KeyInputCallback(GLFWwindow * window, int key, int scancode, int act
 void Input::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
 	currentMousePosition = Vector2((float)xpos, Engine::I()->GetWindowSize().y - (float)ypos);
+	if (lastMousePosition == Vector2())
+		lastMousePosition = currentMousePosition;
 }
 
 void Input::Setup(GLFWwindow * window)

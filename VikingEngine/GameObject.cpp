@@ -9,70 +9,196 @@ int GameObject::nextId = 0;
 GameObject::GameObject()
 {
 	id = nextId;
-	nextId++;
+	GameObject::nextId++;
 
-	components = new std::unordered_map<string, Component *>();
+	componentsCamera = new std::unordered_map<string, Component *>();
+	componentsPhysics = new std::unordered_map<string, Component *>();
+	componentsNormal = new std::unordered_map<string, Component *>();
 }
-
-
 GameObject::~GameObject()
 {
-	delete components;
+	delete componentsCamera;
+	delete componentsPhysics;
+	delete componentsNormal;
 }
 
-void GameObject::UpdateComponents(Scene * scene)
+void GameObject::UpdateCameraComponents(Scene * scene)
 {
-	std::unordered_map<string, Component *>::iterator com = components->begin();
-	while (com != components->end())
+	std::unordered_map<string, Component *>::iterator com = componentsCamera->begin();
+	while (com != componentsCamera->end())
 	{
-		com->second->V_Update(scene);
+		if(com->second->enabled)
+			com->second->V_Update(scene);
 		com++;
 	}
 }
-void GameObject::DrawComponents(Scene * scene)
+void GameObject::UpdatePhysicsComponents(Scene * scene)
 {
-	std::unordered_map<string, Component *>::iterator com = components->begin();
-	while (com != components->end())
+	std::unordered_map<string, Component *>::iterator com = componentsPhysics->begin();
+	while (com != componentsPhysics->end())
 	{
-		com->second->V_Draw(scene);
+		if (com->second->enabled)
+			com->second->V_Update(scene);
 		com++;
 	}
+}
+void GameObject::UpdateNormalComponents(Scene * scene)
+{
+	std::unordered_map<string, Component *>::iterator com = componentsNormal->begin();
+	while (com != componentsNormal->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Update(scene);
+		com++;
+	}
+}
+
+void GameObject::DrawCameraComponents(Scene * scene)
+{
+	std::unordered_map<string, Component *>::iterator com = componentsCamera->begin();
+	while (com != componentsCamera->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Draw1(scene);
+		com++;
+	}
+}
+void GameObject::Draw1(Scene * scene)
+{
+	std::unordered_map<string, Component *>::iterator com = componentsNormal->begin();
+	while (com != componentsNormal->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Draw1(scene);
+		com++;
+	}
+
+	com = componentsPhysics->begin();
+	while (com != componentsPhysics->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Draw1(scene);
+		com++;
+	}
+}
+void GameObject::Draw2(Scene * scene)
+{
+	std::unordered_map<string, Component *>::iterator com = componentsNormal->begin();
+	while (com != componentsNormal->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Draw2(scene);
+		com++;
+	}
+
+	com = componentsPhysics->begin();
+	while (com != componentsPhysics->end())
+	{
+		if (com->second->enabled)
+			com->second->V_Draw2(scene);
+		com++;
+	}
+}
+
+bool GameObject::HasColliders()
+{
+	return hasColliders;
 }
 
 Component * GameObject::AddComponent(Component * com)
 {
-	if (components->count(com->GetName()) != 0)
+	if (com->GetName() == "Camera")
 	{
-		Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
-		return com;
+		if (componentsCamera->count(com->GetName()) != 0)
+		{
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return com;
+		}
+		componentsCamera->insert(std::pair<string, Component *>(com->GetName(), com));
 	}
-
+	else if (com->GetName() == "Collider")
+	{
+		if (componentsPhysics->count(com->GetName()) != 0)
+		{
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return com;
+		}
+		componentsPhysics->insert(std::pair<string, Component *>(com->GetName(), com));
+		hasColliders = true;
+	}
+	else
+	{
+		if (componentsNormal->count(com->GetName()) != 0)
+		{
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return com;
+		}
+		componentsNormal->insert(std::pair<string, Component *>(com->GetName(), com));
+	}
 	com->SetParentGameObject(this);
-	components->insert(std::pair<string, Component *>(com->GetName(), com));
 	return com;
 }
-
 Component * GameObject::GetComponent(string name)
 {
-	if (components->count(name) != 1)
+	if (name == "Camera")
 	{
-		Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + name);
-		return nullptr;
+		if (componentsCamera->count(name) != 1)
+		{
+			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + name);
+			return nullptr;
+		}
+		return componentsCamera->find(name)->second;
 	}
-
-	return components->find(name)->second;
+	else if (name == "Collider")
+	{
+		if (componentsPhysics->count(name) != 1)
+		{
+			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + (*this).name + ". Component: " + name);
+			return nullptr;
+		}
+		return componentsPhysics->find(name)->second;
+	}
+	else
+	{
+		if (componentsNormal->count(name) != 1)
+		{
+			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + name);
+			return nullptr;
+		}
+		return componentsNormal->find(name)->second;
+	}
 }
-
 void GameObject::RemoveComponent(Component * com)
 {
-	if (components->count(com->GetName()) != 1)
+	if (name == "Camera")
 	{
-		Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
-		return;
+		if (componentsCamera->count(com->GetName()) != 1)
+		{
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return;
+		}
+		componentsCamera->erase(com->GetName());
 	}
-
+	else if (name == "Collider")
+	{
+		if (componentsPhysics->count(com->GetName()) != 1)
+		{
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return;
+		}
+		componentsPhysics->erase(com->GetName());
+		hasColliders = !componentsNormal->empty();
+	}
+	else
+	{
+		if (componentsNormal->count(com->GetName()) != 1)
+		{
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Game Object Name: " + name + ". Component: " + com->GetName());
+			return;
+		}
+		componentsNormal->erase(com->GetName());
+	}
 	com->RemoveParentGameObject();
-	components->erase(com->GetName());
 }
 
 int GameObject::GetId() const

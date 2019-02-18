@@ -13,12 +13,14 @@ void Component::RemoveParentGameObject()
 
 void Component::V_Update(Scene * scene)
 {
-	if(enabled)
-		Update(scene);
+	Update(scene);
 }
 
-void Component::V_Draw(Scene * scene)
+void Component::V_Draw1(Scene * scene)
 {
-	if (enabled)
-		Draw(scene);
+	Draw1(scene);
+}
+void Component::V_Draw2(Scene * scene)
+{
+	Draw2(scene);
 }

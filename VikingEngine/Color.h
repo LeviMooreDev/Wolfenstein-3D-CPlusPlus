@@ -1,9 +1,12 @@
 #pragma once
 #include "DLLHelper.h"
+#include <iostream>
+#include <string>
+typedef std::basic_string<char> string;
 
 typedef unsigned char BYTE;
 
-class Color
+class DLLEXTERN Color
 {
 private:
 	BYTE r = 0;
@@ -12,33 +15,35 @@ private:
 	BYTE a = 255;
 
 public:
-	DLLEXTERN Color();
-	DLLEXTERN Color(BYTE color);
-	DLLEXTERN Color(BYTE r, BYTE g, BYTE b);
-	DLLEXTERN Color(BYTE r, BYTE g, BYTE b, BYTE a);
-	DLLEXTERN Color(float color);
-	DLLEXTERN Color(float r, float g, float b);
-	DLLEXTERN Color(float r, float g, float b, float a);
-	DLLEXTERN ~Color();
+	Color();
+	Color(BYTE color);
+	Color(BYTE r, BYTE g, BYTE b);
+	Color(BYTE r, BYTE g, BYTE b, BYTE a);
+	Color(float color);
+	Color(float r, float g, float b);
+	Color(float r, float g, float b, float a);
+	~Color();
 
-	DLLEXTERN float R1();
-	DLLEXTERN void R1(float value);
-	DLLEXTERN BYTE R255();
-	DLLEXTERN void R255(BYTE value);
+	float R1();
+	void R1(float value);
+	BYTE R255();
+	void R255(BYTE value);
 
-	DLLEXTERN float G1();
-	DLLEXTERN void G1(float value);
-	DLLEXTERN BYTE G255();
-	DLLEXTERN void G255(BYTE value);
+	float G1();
+	void G1(float value);
+	BYTE G255();
+	void G255(BYTE value);
 
-	DLLEXTERN float B1();
-	DLLEXTERN void B1(float value);
-	DLLEXTERN BYTE B255();
-	DLLEXTERN void B255(BYTE value);
+	float B1();
+	void B1(float value);
+	BYTE B255();
+	void B255(BYTE value);
 
-	DLLEXTERN float A1();
-	DLLEXTERN void A1(float value);
-	DLLEXTERN BYTE A255();
-	DLLEXTERN void A255(BYTE value);
+	float A1();
+	void A1(float value);
+	BYTE A255();
+	void A255(BYTE value);
+
+	operator std::string() const;
 };
 

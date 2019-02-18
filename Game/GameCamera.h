@@ -2,16 +2,18 @@
 #include "Component.h"
 #include "Transform.h"
 
-class CameraMovement : public Component
+class Game : public Component
 {
 private:
-	float cameraSpeed = 10;
+	float normalSpeed = 10;
+	float fastSpeed = 30;
+	float currentSpeed = 30;
 	float lookSpeed = 30;
 
 public:
-	CameraMovement();
-	~CameraMovement();
-	
+	FreeCameraMovement();
+	~FreeCameraMovement();
+
 	void Update(Scene * scene);
 	void Move();
 	void Look();

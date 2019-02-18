@@ -1,2 +1,49 @@
-﻿  Program.cpp
+﻿  Enemy.cpp
+e:\projects\_school\cplusplus\finalassignment\game\enemy.cpp(30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Player.cpp
+  Program.cpp
+  string_view is only available with C++17 or later.
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(123): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(128): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(224): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(225): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(233): warning C4305: 'argument': truncation from 'double' to 'float'
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(244): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(264): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(272): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
   Game.vcxproj -> E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Game.exe
+  A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Textures\ already exists.
+  A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Levels\ already exists.
+  A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Audio\ already exists.
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_1.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_2.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_3.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_4.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_dead.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_fire.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_idle.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_walk.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_1.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_2.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_3.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_4.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_5.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\health_pickup.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_1.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_2.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_3.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\stone wall.png
+         18 file(s) copied.
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level0.l
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level0.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.l
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.png
+          4 file(s) copied.
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_death_1.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_death_2.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_hit.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\pistol.wav
+          4 file(s) copied.

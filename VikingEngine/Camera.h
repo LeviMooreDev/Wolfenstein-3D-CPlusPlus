@@ -9,6 +9,7 @@ class Camera : public Component
 private:
 	bool use;
 	void Update(Scene * scene);
+	void Draw1(Scene * scene);
 
 public:
 	Color backgroundColor;
@@ -20,7 +21,6 @@ public:
 	DLLEXTERN ~Camera();
 
 	DLLEXTERN void Use();
-	void DrawViewport();
 
 	string GetName() { return "Camera"; };
 };

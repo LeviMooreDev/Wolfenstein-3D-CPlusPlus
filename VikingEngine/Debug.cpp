@@ -15,7 +15,7 @@ Debug::~Debug()
 {
 }
 
-void Debug::Log(string text)
+void Debug::Log(string value)
 {
 	//time
 	std::ostringstream streamObj3;
@@ -25,7 +25,7 @@ void Debug::Log(string text)
 	string time = "Time: " + streamObj3.str();
 
 	//combine info to one line
-	string finalString = "***" + time + " - " + text + "\n";
+	string finalString = "***" + time + " - " + value + "\n";
 
 	//convert to cstring
 	const char * output = finalString.c_str();
@@ -33,17 +33,17 @@ void Debug::Log(string text)
 	//write to output window
 	OutputDebugString(output);
 }
-void Debug::Log(int number)
+void Debug::Log(int value)
 {
-	Log(std::to_string(number));
+	Log(std::to_string(value));
 }
-void Debug::Log(unsigned int number)
+void Debug::Log(unsigned int value)
 {
-	Log(std::to_string(number));
+	Log(std::to_string(value));
 }
-void Debug::Log(float number)
+void Debug::Log(float value)
 {
-	Log(std::to_string(number));
+	Log(std::to_string(value));
 }
 
 void Debug::Error(string error, bool stopGame)

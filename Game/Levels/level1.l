@@ -1,0 +1,1 @@
+4,w,f,f,w,f,f,w,f,w,f,f,w,f,w,f,w

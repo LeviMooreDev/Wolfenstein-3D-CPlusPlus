@@ -33,7 +33,7 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 	}
 
 	//4x antialiasing
-	glfwWindowHint(GLFW_SAMPLES, 16);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	windowWidth = width;
 	windowHeight = height;
@@ -55,10 +55,14 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 	glViewport(0, 0, windowWidth, windowHeight);
 	glfwSetFramebufferSizeCallback(window, ResizeCallback);
 
-	glEnable(GL_DEPTH_TEST); // Depth Testing
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glDisable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 
 	Input::Setup(window);
 
@@ -78,9 +82,13 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 
 		gameLoop();
 		glLoadIdentity();
-		activeScene->UpdateGameObjects();
-		activeScene->DrawCamera();
-		activeScene->DrawGameObjects();
+		glDepthMask(true);
+
+		activeScene->Update();
+		activeScene->Draw();
+
+		//glLoadIdentity();
+		//activeScene->UI();
 
 		glfwSwapBuffers(window);
 

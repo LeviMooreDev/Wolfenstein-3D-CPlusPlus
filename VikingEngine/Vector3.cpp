@@ -94,8 +94,14 @@ Vector3 Vector3::Lerp(Vector3 target, float t)
 
 float Vector3::Distance(Vector3 target)
 {
-	Debug::Log((*this - target));
 	return (*this - target).Magnitude();
+}
+
+float Vector3::Angle(Vector3 target)
+{
+	float dot = Vector3::Dot(Normalized(), target.Normalized());
+	float clamp = std::max(-1.0f, std::min(dot, 1.0f));
+	return acos(clamp) * 57.29578f;
 }
 
 float Vector3::SqrMagnitude()
@@ -123,11 +129,11 @@ void Vector3::Normalize()
 		*this = Vector3();
 }
 
+//cross and dot are not made by me. is from Unity codebase.
 Vector3 Vector3::Cross(Vector3 lhs, Vector3 rhs)
 {
 	return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x);
 }
-
 float Vector3::Dot(Vector3 lhs, Vector3 rhs)
 {
 	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
@@ -238,6 +244,16 @@ Vector3 & Vector3::operator/=(const float & number)
 {
 	*this = *this / number;
 	return *this;
+}
+
+float & Vector3::operator[](int i)
+{
+	if (i == 0)
+		return x;
+	if (i == 1)
+		return y;
+	if (i == 2)
+		return z;
 }
 
 Vector3 Vector3::operator!()

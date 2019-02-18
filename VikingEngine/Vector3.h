@@ -46,6 +46,9 @@ public:
 	//returns the distance to target
 	float Distance(Vector3 target);
 
+	//returns the angle in degrees between this and target
+	float Angle(Vector3 target);
+
 	//returns the squared length of this vector
 	float SqrMagnitude();
 	//returns the length of this vector
@@ -64,6 +67,7 @@ public:
 
 	//returns a copy of the vector rotated around an axis
 	Vector3 Rotate(Vector3 axis, float degrees);
+
 
 	bool operator==(const Vector3 & other) const;
 	bool operator!=(const Vector3 & other) const;
@@ -88,6 +92,7 @@ public:
 	Vector3& operator*=(const float & number);
 	Vector3& operator/=(const float & number);
 
+	float& operator[] (int i);
 	Vector3 operator!();
 
 	operator std::string() const;

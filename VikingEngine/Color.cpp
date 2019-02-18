@@ -1,5 +1,7 @@
 #include "Color.h"
-
+#include <iostream>
+#include <string>
+typedef std::basic_string<char> string;
 
 
 Color::Color()
@@ -111,4 +113,9 @@ BYTE Color::A255()
 void Color::A255(BYTE value)
 {
 	a = value;
+}
+
+Color::operator std::string() const
+{
+	return "(" + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + ", " + std::to_string(a) + ")";
 }

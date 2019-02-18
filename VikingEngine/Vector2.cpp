@@ -76,7 +76,6 @@ Vector2 Vector2::Lerp(Vector2 target, float t)
 
 float Vector2::Distance(Vector2 target)
 {
-	Debug::Log((*this - target));
 	return (*this - target).Magnitude();
 }
 
