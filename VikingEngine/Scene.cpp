@@ -86,9 +86,10 @@ void Scene::Draw()
 
 void Scene::UI()
 {
-	//glMatrixMode(GL_PROJECTION_MATRIX);
+	glMatrixMode(GL_PROJECTION_MATRIX);
 	glOrtho(0, Engine::I()->GetWindowSize().x, 0, Engine::I()->GetWindowSize().y, -1, 1);
-	//glMatrixMode(GL_MODELVIEW_MATRIX);
+	glMatrixMode(GL_MODELVIEW_MATRIX);
+	glDisable(GL_DEPTH_TEST);
 
 	std::unordered_set<UIBase *>::iterator uiElement = uiElements->begin();
 	while (uiElement != uiElements->end())
@@ -105,6 +106,8 @@ void Scene::UI()
 			(*uiElement)->Draw();
 		uiElement++;
 	}
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 void Scene::SortGameObjectsByDistanceToCamera()

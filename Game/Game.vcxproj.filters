@@ -33,6 +33,10 @@
     <ClCompile Include="Health.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EndGame.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FreeCameraMovement.h">
@@ -57,5 +61,9 @@
     <ClInclude Include="Health.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="EndGame.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h" />
   </ItemGroup>
 </Project>

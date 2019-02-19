@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "Audio.h"
 #include "UINumber.h"
+#include "Game.h"
 
 Player::Player()
 {
@@ -95,11 +96,11 @@ void Player::Weapon()
 			{
 				if (hasPistol)
 				{
-					((Enemy *)(hit->GetComponent(Enemy().GetName())))->Hit();
+					((Enemy *)(hit->GetComponent(Enemy().GetName())))->HitByPlayer();
 				}
 				else if(gameObject->transform.position.Distance(hit->transform.position) < 2)
 				{
-					((Enemy *)(hit->GetComponent(Enemy().GetName())))->Hit();
+					((Enemy *)(hit->GetComponent(Enemy().GetName())))->HitByPlayer();
 				}
 			}
 		}
@@ -134,4 +135,24 @@ void Player::AddGold(int amount)
 void Player::GivePistol()
 {
 	hasPistol = true;
+}
+
+void Player::Hit()
+{
+	health -= 8;
+	if (health < 0)
+		health = 0;
+	hudHealth->number = health;
+
+	if (health == 0)
+	{
+		Audio::Play("player dead");
+		Game::LoseGame();
+		//dead
+	}
+	else
+	{
+		string sounds[2] = { "player hit 1", "player hit 2" };
+		Audio::PlayRandom(sounds, 2);
+	}
 }

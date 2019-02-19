@@ -55,6 +55,10 @@ namespace ImageToLevelFile
                         {
                             levelData += "e";
                         }
+                        else if (pixel.R == 145 && pixel.G == 0 && pixel.B == 0)
+                        {
+                            levelData += "k";
+                        }
                         else if (pixel.R == 150 && pixel.G == 110 && pixel.B == 0)
                         {
                             levelData += "o";
@@ -66,6 +70,10 @@ namespace ImageToLevelFile
                         else if (pixel.R == 0 && pixel.G == 0 && pixel.B == 255)
                         {
                             levelData += "d";
+                        }
+                        else if (pixel.R == 100 && pixel.G == 0 && pixel.B == 100)
+                        {
+                            levelData += "x";
                         }
                         else
                         {

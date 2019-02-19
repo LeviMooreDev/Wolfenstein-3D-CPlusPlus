@@ -38,7 +38,7 @@ public:
 	DLLEXTERN GameObject();
 	DLLEXTERN ~GameObject();
 
-	float GetDistanceToCamera();
+	DLLEXTERN float GetDistanceToCamera();
 
 	//update the game objects components.
 	void UpdateCameraComponents(Scene * scene);

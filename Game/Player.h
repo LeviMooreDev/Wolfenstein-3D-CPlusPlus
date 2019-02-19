@@ -8,7 +8,7 @@
 class Player : public Component
 {
 private:
-	int health = 100;
+	int health = 1;
 	int gold = 0;
 	float walkSpeed = 10;
 	float lookSpeed = 25;
@@ -33,6 +33,7 @@ public:
 	void AddHealth(int amount);
 	void AddGold(int amount);
 	void GivePistol();
+	void Hit();
 
 	string GetName() { return "Player"; };
 };
