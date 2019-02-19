@@ -36,6 +36,12 @@ void MeshRenderer::SetTexture(string textureName, float * texture_coord, bool us
 	useColor = false;
 }
 
+void MeshRenderer::SetTextureRandom(string * textures, int count, float * texture_coord, bool useAlpha)
+{
+	int index = (rand() % (count));
+	SetTexture(textures[index], texture_coord, useAlpha);
+}
+
 void MeshRenderer::SetColor(float * colors)
 {
 	(*this).colors = colors;
@@ -83,6 +89,11 @@ void MeshRenderer::Draw()
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (doubleSided)
+		glDisable(GL_CULL_FACE);
+	else
+		glEnable(GL_CULL_FACE);
 
 	glEnable(GL_DEPTH_TEST);
 

@@ -7,6 +7,9 @@ UIBase::UIBase()
 	id = nextId;
 	UIBase::nextId++;
 }
+UIBase::~UIBase()
+{
+}
 
 int UIBase::GetId() const
 {

@@ -1,23 +1,31 @@
-﻿  Enemy.cpp
-e:\projects\_school\cplusplus\finalassignment\game\enemy.cpp(30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Player.cpp
-  Program.cpp
+﻿  Program.cpp
   string_view is only available with C++17 or later.
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(123): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(128): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(224): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(225): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(233): warning C4305: 'argument': truncation from 'double' to 'float'
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(244): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(264): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-e:\projects\_school\cplusplus\finalassignment\game\program.cpp(272): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Generating Code...
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(166): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(166): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(167): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(171): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(272): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(295): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(321): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(350): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(381): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(382): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(404): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(407): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(418): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(419): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(429): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(442): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(453): warning C4305: 'initializing': truncation from 'double' to 'float'
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(469): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+e:\projects\_school\cplusplus\finalassignment\game\program.cpp(470): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Game.vcxproj -> E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Game.exe
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Textures\ already exists.
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Levels\ already exists.
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Audio\ already exists.
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\blue wall.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\door.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\door_frame.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_2.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_3.png
@@ -26,24 +34,29 @@ e:\projects\_school\cplusplus\finalassignment\game\program.cpp(272): warning C43
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_fire.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_idle.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\guard_walk.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_1.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_2.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_3.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_4.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\handgun_5.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\health_pickup.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud knife.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud pistol.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\intro.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\knife.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\numbers.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_2.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_3.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\pistol.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\stone wall.png
-         18 file(s) copied.
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level0.l
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level0.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\wood wall.png
+         24 file(s) copied.
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.l
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.png
-          4 file(s) copied.
+          2 file(s) copied.
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\door.wav
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_death_1.wav
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_death_2.wav
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\enemy_hit.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\health.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\knife.wav
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\pickup.wav
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Audio\pistol.wav
-          4 file(s) copied.
+          8 file(s) copied.

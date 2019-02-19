@@ -81,6 +81,9 @@
     <ClInclude Include="Audio.h">
       <Filter>Static</Filter>
     </ClInclude>
+    <ClInclude Include="UINumber.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -139,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="Audio.cpp">
       <Filter>Static</Filter>
+    </ClCompile>
+    <ClCompile Include="UINumber.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

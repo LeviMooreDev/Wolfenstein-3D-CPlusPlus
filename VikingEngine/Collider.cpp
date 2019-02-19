@@ -40,74 +40,119 @@ Vector3 Collider::Max()
 
 void Collider::Update(Scene * scene)
 {
-checkAgain:
 	if (lastCenter == center && lastSize == size && lastPosition == gameObject->transform.position)
 		return;
-	lastCenter = center;
-	lastSize = size;
-	lastPosition = gameObject->transform.position;
 
-	Vector3 selfMin = Min();
-	Vector3 selfMax = Max();
+	bool checkAgain = true;
+	int checkCountLeft = 5;
 
-	std::unordered_set<GameObject *>::iterator otherGameObject = scene->GetAllGameObjects()->begin();
-	while (otherGameObject != scene->GetAllGameObjects()->end())
+	while (checkAgain)
 	{
-		if ((*otherGameObject) != gameObject && (*otherGameObject)->enabled)
+		checkAgain = false;
+
+		Vector3 selfMin = Min();
+		Vector3 selfMax = Max();
+
+		std::vector<GameObject *>::iterator otherGameObject = scene->GetAllGameObjects()->begin();
+		while (otherGameObject != scene->GetAllGameObjects()->end())
 		{
-			if ((*otherGameObject)->HasColliders())
+			if ((*otherGameObject) != gameObject && (*otherGameObject)->enabled)
 			{
-				Collider * otherCollider = (Collider *)(*otherGameObject)->GetComponent(Collider().GetName());
-				if (otherCollider->enabled)
+				if ((*otherGameObject)->HasColliders())
 				{
-					Vector3 otherMin = otherCollider->Min();
-					Vector3 otherMax = otherCollider->Max();
-
-					if ((selfMax.x > otherMin.x && selfMin.x < otherMax.x && selfMax.y > otherMin.y && selfMin.y < otherMax.y && selfMax.z > otherMin.z && selfMin.z < otherMax.z))
+					Collider * otherCollider = (Collider *)(*otherGameObject)->GetComponent(Collider().GetName());
+					if (otherCollider->enabled)
 					{
-						if (solid)
-						{
-							//right
-							Vector3 normal = Vector3();
-							if (selfMin.x < otherMin.x)
-							{
-								gameObject->transform.position -= Vector3(selfMax.x - otherMin.x, 0, 0);
-								goto checkAgain;
-							}
-							//left
-							else if (selfMax.x > otherMax.x)
-							{
-								gameObject->transform.position += Vector3(otherMax.x - selfMin.x, 0, 0);
-								goto checkAgain;
-							}
-							//forward
-							else if (selfMin.z < otherMin.z)
-							{
-								gameObject->transform.position -= Vector3(0, 0, selfMax.z - otherMin.z);
-								goto checkAgain;
-							}
-							//back
-							else if (selfMax.z > otherMax.z)
-							{
-								gameObject->transform.position += Vector3(0, 0, otherMax.z - selfMin.z);
-								goto checkAgain;
-							}
+						Vector3 otherMin = otherCollider->Min();
+						Vector3 otherMax = otherCollider->Max();
 
-							if (onHit != nullptr)
-								onHit(otherCollider->gameObject);
-						}
-						else
+						if ((selfMax.x > otherMin.x && selfMin.x < otherMax.x && selfMax.y > otherMin.y && selfMin.y < otherMax.y && selfMax.z > otherMin.z && selfMin.z < otherMax.z))
 						{
-							if (onTrigger != nullptr)
-								onTrigger(otherCollider->gameObject);
+							if (otherCollider->solid)
+							{
+								if (solid)
+								{
+									Vector3 move = Vector3();
+
+									//right
+									if (gameObject->transform.position.x < (*otherGameObject)->transform.position.x)
+									{
+										Vector3 newMove = Vector3(-abs(selfMax.x - otherMin.x), 0, 0);
+
+										if (move == Vector3() || move.Distance(Vector3()) > newMove.Distance(Vector3()))
+											move = newMove;
+									}
+
+									//back
+									if (gameObject->transform.position.z > (*otherGameObject)->transform.position.z)
+									{
+										Vector3 newMove = Vector3(0, 0, abs(otherMax.z - selfMin.z));
+
+										if (move == Vector3() || move.Distance(Vector3()) > newMove.Distance(Vector3()))
+											move = newMove;
+									}
+
+									//left
+									if (gameObject->transform.position.x > (*otherGameObject)->transform.position.x)
+									{
+										Vector3 newMove = Vector3(abs(selfMin.x - otherMax.x), 0, 0);
+
+										if (move == Vector3() || move.Distance(Vector3()) > newMove.Distance(Vector3()))
+											move = newMove;
+									}
+
+									//forward
+									if (gameObject->transform.position.z < (*otherGameObject)->transform.position.z)
+									{
+										Vector3 newMove = Vector3(0, 0, -abs(otherMin.z - selfMax.z));
+
+										if (move == Vector3() || move.Distance(Vector3()) > newMove.Distance(Vector3()))
+											move = newMove;
+									}
+
+									if (move != Vector3())
+									{
+										gameObject->transform.position += move;
+										checkCountLeft--;
+
+										if (checkCountLeft == 0)
+										{
+											gameObject->transform.position = lastPosition;
+											Debug::Log(1);
+										}
+										else
+										{
+											checkAgain = true;
+											break;
+										}
+									}
+
+									if (onHit != nullptr)
+										onHit(otherCollider->gameObject);
+
+									if (otherCollider->onHit != nullptr)
+										otherCollider->onHit(gameObject);
+								}
+							}
+							else
+							{
+								if (onTrigger != nullptr)
+									onTrigger(otherCollider->gameObject);
+
+								if (otherCollider->onTrigger != nullptr)
+									otherCollider->onTrigger(gameObject);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		otherGameObject++;
+			otherGameObject++;
+		}
 	}
+	lastCenter = center;
+	lastSize = size;
+	lastPosition = gameObject->transform.position;
 }
 void Collider::Draw2(Scene * scene)
 {

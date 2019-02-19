@@ -23,6 +23,8 @@ private:
 	void Draw2(Scene * scene);
 
 public:
+	bool doubleSided;
+
 	DLLEXTERN static bool showWireframe;
 
 	DLLEXTERN MeshRenderer();
@@ -30,6 +32,7 @@ public:
 
 	DLLEXTERN void SetVertices(float * vertices, int verticesCount);
 	DLLEXTERN void SetTexture(string texture, float * texture_coord, bool useAlpha);
+	DLLEXTERN void SetTextureRandom(string * textures, int count, float * texture_coord, bool useAlpha);
 	DLLEXTERN void SetColor(float * colors);
 	DLLEXTERN void SetColor(float color);
 	DLLEXTERN void SetColor(float r, float g, float b);

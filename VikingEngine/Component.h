@@ -21,6 +21,7 @@ public:
 	bool enabled = true;
 
 	void SetParentGameObject(GameObject * gameObject);
+	GameObject * GetParentGameObject();
 	void RemoveParentGameObject();
 
 	virtual string GetName() { return "Component"; };

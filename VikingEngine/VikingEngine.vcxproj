@@ -200,6 +200,7 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIImage.cpp" />
+    <ClCompile Include="UINumber.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
@@ -222,6 +223,7 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIImage.h" />
+    <ClInclude Include="UINumber.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>

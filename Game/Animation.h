@@ -13,6 +13,7 @@ public:
 	int maxIndex;
 	bool loop = true;
 	float waitTime;
+	float run = true;
 
 	void Reset();
 	void UpdateTime(float time);

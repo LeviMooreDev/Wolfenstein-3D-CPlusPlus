@@ -25,6 +25,6 @@ public:
 
 	DLLEXTERN void Close();
 
-	Vector2 GetWindowSize();
+	DLLEXTERN Vector2 GetWindowSize();
 };
 

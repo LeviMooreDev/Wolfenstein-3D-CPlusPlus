@@ -4,11 +4,13 @@
 #include "Debug.h"
 #include <exception>
 #include "Engine.h"
+#include <algorithm>
+#include "Input.h"
+#include <algorithm>
+#include <iostream>
 
 Scene::Scene()
 {
-	gameObjects = new std::unordered_set<GameObject *>();
-	uiElements = new std::unordered_set<UIBase *>();
 }
 Scene::~Scene()
 {
@@ -18,11 +20,12 @@ Scene::~Scene()
 
 void Scene::Update()
 {
-	std::unordered_set<GameObject *>::iterator go = gameObjects->begin();
+	std::vector<GameObject *>::iterator go = gameObjects->begin();
+	
 	while (go != gameObjects->end())
 	{
 		if ((*go)->enabled)
-			(*go)->UpdatePhysicsComponents(this);
+			(*go)->UpdateSelf(this);
 		go++;
 	}
 
@@ -41,11 +44,19 @@ void Scene::Update()
 			(*go)->UpdateNormalComponents(this);
 		go++;
 	}
+
+	go = gameObjects->begin();
+	while (go != gameObjects->end())
+	{
+		if ((*go)->enabled)
+			(*go)->UpdatePhysicsComponents(this);
+		go++;
+	}
 }
 void Scene::Draw()
 {
 	//draw camera
-	std::unordered_set<GameObject *>::iterator go = gameObjects->begin();
+	std::vector<GameObject *>::iterator go = gameObjects->begin();
 	while (go != gameObjects->end())
 	{
 		if ((*go)->enabled)
@@ -53,6 +64,7 @@ void Scene::Draw()
 		go++;
 	}
 
+	SortGameObjectsByDistanceToCamera();
 	//draw 1
 	go = gameObjects->begin();
 	while (go != gameObjects->end())
@@ -95,28 +107,79 @@ void Scene::UI()
 	}
 }
 
-GameObject * Scene::AddGameObject(GameObject *go)
+void Scene::SortGameObjectsByDistanceToCamera()
 {
-	if (gameObjects->count(go) != 0)
+	if (gameObjects->size() < 2)
+		return;
+
+	if (lastGameObjectCount != gameObjects->size())
 	{
-		Debug::Error("Trying to add same game object to a scene twice. ID: " + std::to_string(go->GetId()) + " Name: " + go->name);
-		return go;
+		lastGameObjectCount = gameObjects->size();
+		bool swapp = true;
+		while (swapp)
+		{
+			swapp = false;
+			std::vector<GameObject *>::iterator go = gameObjects->begin();
+			while (go != gameObjects->end() - 1)
+			{
+				if ((*go)->GetDistanceToCamera() > 20)
+				{
+					go++;
+					continue;
+				}
+
+				if (!(*go)->distanceToCameraIsImportant && (*(go + 1))->distanceToCameraIsImportant)
+				{
+					std::iter_swap(go, go + 1);
+					swapp = true;
+				}
+
+				go++;
+			}
+		}
 	}
 
-	gameObjects->insert(go);
+	bool swapp = true;
+	while (swapp)
+	{
+		swapp = false;
+
+		std::vector<GameObject *>::iterator go = gameObjects->begin();
+		while (go != gameObjects->end() - 1)
+		{
+			if ((*go)->GetDistanceToCamera() > 20)
+			{
+				go++;
+				continue;
+			}
+
+			if (!(*go)->distanceToCameraIsImportant)
+				break;
+
+			if ((*go)->GetDistanceToCamera() < (*(go + 1))->GetDistanceToCamera())
+			{
+				std::iter_swap(go, go + 1);
+				swapp = true;
+			}
+
+			go++;
+		}
+	}
+
+	endLoop:
+	return;
+}
+
+GameObject * Scene::AddGameObject(GameObject *go)
+{
+	gameObjects->push_back(go);
 	return go;
 }
 void Scene::RemoveGameObject(GameObject * go)
 {
-	if (gameObjects->count(go) != 1)
-	{
-		Debug::Error("Trying to remove game object that is not in the scene. ID: " + std::to_string(go->GetId()) + " Name: " + go->name);
-		return;
-	}
-
-	gameObjects->erase(go);
+	gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), go), gameObjects->end());
 }
-std::unordered_set<GameObject *> * Scene::GetAllGameObjects()
+std::vector<GameObject *> * Scene::GetAllGameObjects()
 {
 	return gameObjects;
 }

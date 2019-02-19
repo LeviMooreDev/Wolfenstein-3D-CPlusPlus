@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Transform.h"
 #include "Vector2.h"
+#include "Audio.h"
 
 Engine * Engine::i;
 GLFWwindow* window;
@@ -65,6 +66,7 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 	glCullFace(GL_FRONT);
 
 	Input::Setup(window);
+	Audio::Setup();
 
 	//run start method
 	start();
@@ -75,23 +77,21 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 
 		if (activeScene == nullptr)
 		{
-			glClearColor(1, 1, 1, 1);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			return;
 		}
 
-		gameLoop();
 		glLoadIdentity();
 		glDepthMask(true);
 
 		activeScene->Update();
 		activeScene->Draw();
 
-		//glLoadIdentity();
-		//activeScene->UI();
+		glLoadIdentity();
+		activeScene->UI();
 
 		glfwSwapBuffers(window);
 
+		gameLoop();
 		Input::EndLoop();
 	}
 

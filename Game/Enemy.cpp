@@ -6,6 +6,7 @@
 #include "Collider.h"
 #include "Time.h"
 #include "Audio.h"
+#include "Player.h"
 
 Enemy::Enemy()
 {
@@ -22,14 +23,6 @@ Enemy::~Enemy()
 
 void Enemy::Update(Scene * scene)
 {
-	//look at player
-	float distanceX = gameObject->transform.position.x - player->transform.position.x;
-	float distanceZ = gameObject->transform.position.z - player->transform.position.z;
-
-	gameObject->transform.rotation.x = 0;
-	gameObject->transform.rotation.y = -atan2(distanceX, distanceZ) * 180 / 3.14159265358979323846;
-	gameObject->transform.rotation.z = 0;
-
 	//direction to player
 	Vector3 directionToPlayer = Vector3(player->transform.position.x, 0, player->transform.position.z) - Vector3(gameObject->transform.position.x, 0, gameObject->transform.position.z);
 	
@@ -110,6 +103,8 @@ void Enemy::Hit()
 		deadAnimation.waitTime = 0.14f;
 		deadAnimation.maxIndex = 4;
 		dead = true;
+
+		((Player*)player->GetComponent(Player().GetName()))->GivePistol();
 	}
 	else
 	{

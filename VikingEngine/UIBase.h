@@ -1,5 +1,6 @@
 #pragma once
 #include "DLLHelper.h"
+#include "Vector2.h"
 
 class UIBase
 {
@@ -11,8 +12,12 @@ private:
 
 public:
 	bool enabled = true;
+	Vector2 position;
+	Vector2 size;
+	float order = 0;
 
 	UIBase();
+	~UIBase();
 
 	virtual void Update() {};
 	virtual void Draw() {};

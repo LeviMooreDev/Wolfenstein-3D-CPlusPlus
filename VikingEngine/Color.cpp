@@ -9,7 +9,8 @@ Color::Color()
 }
 Color::Color(BYTE color)
 {
-	r = g = b = a = color;
+	r = g = b = color;
+	a = 255;
 }
 Color::Color(BYTE r, BYTE g, BYTE b)
 {

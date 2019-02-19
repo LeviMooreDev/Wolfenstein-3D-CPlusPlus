@@ -27,5 +27,7 @@ public:
 	void Idle();
 	void Dead();
 	void Hit();
+
+	string GetName() { return "Enemy"; };
 };
 

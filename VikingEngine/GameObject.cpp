@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include "Component.h"
 #include "Scene.h"
+#include "Engine.h"
 
 int GameObject::nextId = 0;
 
@@ -22,6 +23,16 @@ GameObject::~GameObject()
 	delete componentsNormal;
 }
 
+float GameObject::GetDistanceToCamera()
+{
+	return distanceToCamera;
+}
+
+void GameObject::UpdateSelf(Scene * scene)
+{
+	if (scene->activeCamera != nullptr)
+		distanceToCamera = transform.position.Distance(scene->activeCamera->GetParentGameObject()->transform.position);
+}
 void GameObject::UpdateCameraComponents(Scene * scene)
 {
 	std::unordered_map<string, Component *>::iterator com = componentsCamera->begin();
@@ -209,9 +220,4 @@ int GameObject::GetId() const
 bool GameObject::operator==(const GameObject & other) const
 {
 	return id == other.id;
-}
-
-bool GameObject::operator<(const GameObject & other) const
-{
-	return id < other.id;
 }

@@ -6,6 +6,11 @@ void Component::SetParentGameObject(GameObject * gameObject)
 	(*this).gameObject = gameObject;
 }
 
+GameObject * Component::GetParentGameObject()
+{
+	return gameObject;
+}
+
 void Component::RemoveParentGameObject()
 {
 	gameObject = nullptr;

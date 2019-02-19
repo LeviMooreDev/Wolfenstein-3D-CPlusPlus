@@ -24,7 +24,7 @@ GameObject * Raycast::Send(Vector3 origin, Vector3 direction, Vector3 & point, G
 		return nearestHit;
 
 	//loop game objects in active scene
-	std::unordered_set<GameObject *>::iterator gameObject = Engine::I()->activeScene->GetAllGameObjects()->begin();
+	std::vector<GameObject *>::iterator gameObject = Engine::I()->activeScene->GetAllGameObjects()->begin();
 	while (gameObject != Engine::I()->activeScene->GetAllGameObjects()->end())
 	{
 		//ignore if we are told
@@ -43,6 +43,12 @@ GameObject * Raycast::Send(Vector3 origin, Vector3 direction, Vector3 & point, G
 		{
 			//get the game objects collider component
 			Collider * collider = (Collider *)(*gameObject)->GetComponent(Collider().GetName());
+
+			if (!collider->enabled)
+				goto endloop;
+
+			if (!collider->solid)
+				goto endloop;
 
 			//find the min and max x,y,z values for the collider
 			Vector3 min = collider->Min();

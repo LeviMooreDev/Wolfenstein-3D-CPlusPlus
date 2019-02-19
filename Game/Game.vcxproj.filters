@@ -21,6 +21,18 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="LookAt.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Gold.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Health.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FreeCameraMovement.h">
@@ -33,5 +45,17 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="LookAt.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Gold.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Health.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

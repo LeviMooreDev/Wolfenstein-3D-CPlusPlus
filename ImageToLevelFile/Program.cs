@@ -33,7 +33,19 @@ namespace ImageToLevelFile
                         levelData += ",";
                         if (pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
                         {
+                            levelData += "s";
+                        }
+                        else if (pixel.R == 167 && pixel.G == 167 && pixel.B == 167)
+                        {
                             levelData += "w";
+                        }
+                        else if (pixel.R == 76 && pixel.G == 76 && pixel.B == 76)
+                        {
+                            levelData += "b";
+                        }
+                        else if (pixel.R == 0 && pixel.G == 80 && pixel.B == 0)
+                        {
+                            levelData += "h";
                         }
                         else if (pixel.R == 0 && pixel.G == 255 && pixel.B == 0)
                         {
@@ -43,9 +55,21 @@ namespace ImageToLevelFile
                         {
                             levelData += "e";
                         }
+                        else if (pixel.R == 150 && pixel.G == 110 && pixel.B == 0)
+                        {
+                            levelData += "o";
+                        }
+                        else if (pixel.R == 255 && pixel.G == 255 && pixel.B == 0)
+                        {
+                            levelData += "g";
+                        }
+                        else if (pixel.R == 0 && pixel.G == 0 && pixel.B == 255)
+                        {
+                            levelData += "d";
+                        }
                         else
                         {
-                            levelData += "f";
+                            levelData += " ";
                         }
                     }
                 }

@@ -3,6 +3,8 @@
 #include <GLFW\glfw3.h>
 #include "Scene.h"
 #include "Engine.h"
+#include <algorithm>
+#include <algorithm>
 
 
 
@@ -34,14 +36,14 @@ void Camera::Draw1(Scene * scene)
 		return;
 
 	//clear scene
-	glClearColor(backgroundColor.R1(), backgroundColor.G1(), backgroundColor.B1(), backgroundColor.A1());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//set perspective
 	glMatrixMode(GL_PROJECTION_MATRIX);
 	gluPerspective(fov, (double)Engine::I()->GetWindowSize().x / (double)Engine::I()->GetWindowSize().y, nearClip, farClip);
-	
 	glMatrixMode(GL_MODELVIEW_MATRIX);
+	
+	glClearColor(backgroundColor.R1(), backgroundColor.G1(), backgroundColor.B1(), backgroundColor.A1());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//rotation
 	glRotatef(gameObject->transform.rotation.x, 1, 0, 0);

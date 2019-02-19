@@ -9,6 +9,16 @@ using namespace irrklang;
 std::unordered_map<string, string> * Audio::audioIds = new std::unordered_map<string, string>();
 static ISoundEngine * engine = nullptr;
 
+void Audio::Setup()
+{
+	engine = createIrrKlangDevice();
+	if (!engine)
+	{
+		Debug::Error("Failed to create irrklang engine");
+		engine = nullptr;
+	}
+}
+
 void Audio::Play(string name)
 {
 	if (audioIds->count(name) != 1)
@@ -16,17 +26,10 @@ void Audio::Play(string name)
 		Debug::Error("Trying to play a sound that does not exists. Name: " + name);
 	}
 
-	if (engine == nullptr)
+	if (engine != nullptr)
 	{
-		engine = createIrrKlangDevice();
-		if (!engine)
-		{
-			Debug::Error("Failed to create irrklang engine");
-			engine = nullptr;
-			return;
-		}
+		engine->play2D(audioIds->find(name)->second.c_str());
 	}
-	engine->play2D(audioIds->find(name)->second.c_str());
 }
 
 void Audio::PlayRandom(string * names, int count)

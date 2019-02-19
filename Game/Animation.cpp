@@ -20,6 +20,9 @@ void Animation::Reset()
 
 void Animation::UpdateTime(float deltaTime)
 {
+	if (!run)
+		return;
+
 	time += deltaTime;
 	if (time > nextTime)
 	{

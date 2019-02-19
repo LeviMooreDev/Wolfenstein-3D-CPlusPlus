@@ -20,8 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FreeCameraMovement.cpp" />
+    <ClCompile Include="Gold.cpp" />
+    <ClCompile Include="Health.cpp" />
+    <ClCompile Include="LookAt.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
@@ -32,8 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FreeCameraMovement.h" />
+    <ClInclude Include="Gold.h" />
+    <ClInclude Include="Health.h" />
+    <ClInclude Include="LookAt.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
