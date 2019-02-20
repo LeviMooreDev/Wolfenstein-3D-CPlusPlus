@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Door.cpp" />
-    <ClCompile Include="EndGame.cpp" />
+    <ClCompile Include="EndGameLever.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FreeCameraMovement.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -39,7 +39,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Door.h" />
-    <ClInclude Include="EndGame.h" />
+    <ClInclude Include="EndGameLever.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FreeCameraMovement.h" />
     <ClInclude Include="Game.h" />
@@ -47,6 +47,9 @@
     <ClInclude Include="Health.h" />
     <ClInclude Include="LookAt.h" />
     <ClInclude Include="Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="README.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -101,15 +104,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)Build\</OutDir>
+    <TargetName>Wolfenstein Real 3D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)Build\</OutDir>
+    <TargetName>Wolfenstein Real 3D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)Build\</OutDir>
+    <TargetName>Wolfenstein Real 3D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)Build\</OutDir>
+    <TargetName>Wolfenstein Real 3D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

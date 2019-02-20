@@ -5,13 +5,6 @@
 #include "Time.h"
 #include "Debug.h"
 
-FreeCameraMovement::FreeCameraMovement()
-{
-	Input::HideCursor();
-}
-FreeCameraMovement::~FreeCameraMovement()
-{
-}
 
 void FreeCameraMovement::Update(Scene * scene)
 {
@@ -21,17 +14,19 @@ void FreeCameraMovement::Update(Scene * scene)
 
 void FreeCameraMovement::Move()
 {
+	//if left shift is down fly faster
 	if (Input::KeyHold(Input::Keys::LEFT_SHIFT))
 		currentSpeed = fastSpeed;
 	else
 		currentSpeed = normalSpeed;
 
+	//move up and down relative to the world
 	if (Input::KeyHold(Input::Keys::Q))
 		gameObject->transform.position += Vector3::Up() * currentSpeed * Time::GetDeltaTime();
-
 	if (Input::KeyHold(Input::Keys::E))
 		gameObject->transform.position += Vector3::Down() * currentSpeed * Time::GetDeltaTime();
 
+	//move foward, back, left and right relative to self
 	if (Input::KeyHold(Input::Keys::W))
 		gameObject->transform.position += gameObject->transform.Forward() * currentSpeed * Time::GetDeltaTime();
 
@@ -47,6 +42,9 @@ void FreeCameraMovement::Move()
 
 void FreeCameraMovement::Look()
 {
+	//rotate on y axis. left, right
 	gameObject->transform.rotation += Vector3::Up() * Input::MouseMoveDirection().x * lookSpeed * Time::GetDeltaTime();
+
+	//rotate on x axis. up, down.
 	gameObject->transform.rotation += Vector3::Left() * Input::MouseMoveDirection().y * lookSpeed * Time::GetDeltaTime();
 }

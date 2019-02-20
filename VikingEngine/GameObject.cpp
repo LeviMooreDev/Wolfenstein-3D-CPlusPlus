@@ -47,7 +47,7 @@ float GameObject::GetDistanceToCamera()
 void GameObject::UpdateSelf(Scene * scene)
 {
 	if (scene->activeCamera != nullptr)
-		distanceToCamera = transform.position.Distance(scene->activeCamera->GetParentGameObject()->transform.position);
+		distanceToCamera = transform.position.Distance(scene->activeCamera->gameObject->transform.position);
 }
 void GameObject::UpdatePhysicsComponents(Scene * scene)
 {
@@ -151,7 +151,7 @@ Component * GameObject::AddComponent(Component * com)
 		}
 		componentsNormal.insert(std::pair<string, Component *>(com->GetName(), com));
 	}
-	com->SetParentGameObject(this);
+	com->gameObject = this;
 	return com;
 }
 Component * GameObject::GetComponent(string name)
@@ -214,7 +214,7 @@ void GameObject::RemoveComponent(Component * com)
 		}
 		componentsNormal.erase(com->GetName());
 	}
-	com->RemoveParentGameObject();
+	com->gameObject = nullptr;
 }
 
 int GameObject::GetId() const

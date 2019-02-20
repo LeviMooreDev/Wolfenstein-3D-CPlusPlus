@@ -14,15 +14,9 @@ private:
 	virtual void Draw1(Scene * scene) { };
 	virtual void Draw2(Scene * scene) { };
 
-protected:
-	GameObject * gameObject = nullptr;
-
 public:
 	bool enabled = true;
-
-	void SetParentGameObject(GameObject * gameObject);
-	GameObject * GetParentGameObject();
-	void RemoveParentGameObject();
+	GameObject * gameObject = nullptr;
 
 	virtual string GetName() { return "Component"; };
 	

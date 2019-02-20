@@ -1,14 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre mitigation is enabled but Spectre mitigated libraries are not found.  Verify that the Visual Studio Workload includes the Spectre mitigated libraries.  See https://aka.ms/Ofhn4c for more information.
-  EndGame.cpp
-  Enemy.cpp
   Game.cpp
   string_view is only available with C++17 or later.
-  Gold.cpp
-  Health.cpp
-  Player.cpp
-  Program.cpp
-  Generating Code...
-  Game.vcxproj -> E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Game.exe
+  Game.vcxproj -> E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Wolfenstein Real 3D.exe
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Textures\ already exists.
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Levels\ already exists.
   A subdirectory or file E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Build\Audio\ already exists.
@@ -30,8 +23,8 @@
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud knife.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud pistol.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\hud.png
-  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\intro.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\knife.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\loading.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\numbers.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_2.png

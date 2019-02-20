@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{27fa4676-1f4d-4ff3-bcb2-54da0fd4a95b}</UniqueIdentifier>
     </Filter>
@@ -33,10 +29,10 @@
     <ClCompile Include="Health.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="EndGame.cpp">
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="EndGameLever.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FreeCameraMovement.h">
@@ -61,9 +57,12 @@
     <ClInclude Include="Health.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="EndGame.h">
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="EndGameLever.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="README.txt" />
   </ItemGroup>
 </Project>
