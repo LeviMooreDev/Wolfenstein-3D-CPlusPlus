@@ -23,14 +23,14 @@ private:
 	bool rightSideOfPlayer;
 	float hitEffectEndTime;
 	bool callHitFun;
-	int hp = 3;
 	float nextFireTime;
-	float fireDelay = 1.35f;
+	float fireDelay = 1;
 
 	Animation deadAnimation;
 	Animation fireAnimation;
 
 public:
+	int hp = 3;
 	Vector3 lookDir = Vector3::Forward();
 	bool ignorePlayer;
 

@@ -34,25 +34,44 @@ Welcome to the land of spaghetti code.
 
 typedef std::basic_string<char> string;
 
+template<typename T>
+void safe_delete(T*& a)
+{
+	delete a;
+	a = nullptr;
+}
+
 bool Game::gameOver = false;
+Scene * Game::winScene;
+Scene * Game::deadScene;
 
 Game::Game() {};
 Game::~Game() {};
 
+
+void Game::FreeMemory()
+{
+	safe_delete(introScene);
+	safe_delete(gameScene);
+	safe_delete(winScene);
+	safe_delete(deadScene);
+}
 void Game::ResetGame()
 {
-	introScene = new Scene();
-	introCameraGameObject = new GameObject();
-	introCameraComponent = new Camera();
-	introCameraComponent->Use();
-	introCameraGameObject->AddComponent(introCameraComponent);
-	introScene->AddGameObject(introCameraGameObject);
+	FreeMemory();
 
-	introBackground = new UIImage();
-	introBackground->SetTexture("intro", new float[8]{ 0, 0, 0, 1, 1, 1, 1, 0, });
-	introBackground->size = Vector2(800, 600);
-	introBackground->position = Vector2(0, 0);
-	introScene->AddUIElement(introBackground);
+	introScene = new Scene();
+	GameObject * cameraGameObject = new GameObject();
+	Camera * cameraComponent = new Camera();
+	introScene->activeCamera = cameraComponent;
+	cameraGameObject->AddComponent(cameraComponent);
+	introScene->AddGameObject(cameraGameObject);
+
+	UIImage * background = new UIImage();
+	background->SetTexture("intro", new float[8]{ 0, 0, 0, 1, 1, 1, 1, 0, });
+	background->size = Vector2(800, 600);
+	background->position = Vector2(0, 0);
+	introScene->AddUIElement(background);
 
 	Engine::I()->activeScene = introScene;
 	gameOver = false;
@@ -61,6 +80,10 @@ void Game::ResetGame()
 
 void Game::LoadAssets()
 {
+	Textures::AddTexture("player", "player");
+
+	Textures::AddTexture("floor", "floor");
+
 	Textures::AddTexture("door", "door");
 	Textures::AddTexture("door frame", "door_frame");
 
@@ -187,6 +210,7 @@ void Game::SetupLevel(int levelNumber)
 	player = new GameObject();
 	player->tag = "Player";
 	playerCom = new Player(handImage, hudWeapon, hudGold, hudHealth);
+	player->AddComponent(playerCom);
 	for (int x = 0; x < size; x++)
 	{
 		for (int z = 0; z < size; z++)
@@ -200,7 +224,6 @@ void Game::SetupLevel(int levelNumber)
 			if (c == 's' || c == 'w' || c == 'b' || c == 'x')
 			{
 				GameObject * wall = new GameObject();
-				wall->name = "Wall";
 
 				//transform
 				wall->transform.position = Vector3(x * cellSize, wallHeight / 2.0f, z * cellSize);
@@ -307,8 +330,6 @@ void Game::SetupLevel(int levelNumber)
 				{
 					delete allVertices;
 					delete allUVs;
-					delete collider;
-					delete meshRenderer;
 					delete wall;
 				}
 				else
@@ -328,7 +349,6 @@ void Game::SetupLevel(int levelNumber)
 
 				MeshRenderer * meshRenderer = new MeshRenderer();
 				meshRenderer->SetVertices(new float[12]{ .5, -.5, 0,   -.5, -.5, 0, -.5, .5, 0,    .5, .5, 0 }, 4);
-				meshRenderer->SetColor(255, 0, 0);
 				enemy->AddComponent(meshRenderer);
 
 				Collider * collider = new Collider();
@@ -350,6 +370,7 @@ void Game::SetupLevel(int levelNumber)
 				{
 					enemyCom->ignorePlayer = true;
 					enemyCom->lookDir = Vector3::Right();
+					enemyCom->hp = 1;
 				}
 
 				gameScene->AddGameObject(enemy);
@@ -366,9 +387,7 @@ void Game::SetupLevel(int levelNumber)
 				MeshRenderer * meshRenderer = new MeshRenderer();
 				meshRenderer->SetVertices(new float[12]{ .5, -.5, 0,   -.5, -.5, 0, -.5, .5, 0,    .5, .5, 0 }, 4);
 				string textures[5] = { "object 1", "object 2", "object 3", "object 4", "object 5" };
-				float * uv = new float[8]{ 0,0,  1,0,
-											1,1,  0,1, };
-				meshRenderer->SetTextureRandom(textures, 5, uv, true);
+				meshRenderer->SetTextureRandom(textures, 5, new float[8]{ 0,0,  1,0, 1,1,  0,1, }, true);
 				object->AddComponent(meshRenderer);
 
 				Collider * collider = new Collider();
@@ -392,8 +411,7 @@ void Game::SetupLevel(int levelNumber)
 				MeshRenderer * meshRenderer = new MeshRenderer();
 				meshRenderer->SetVertices(new float[12]{ .5, -.5, 0,   -.5, -.5, 0, -.5, .5, 0,    .5, .5, 0 }, 4);
 				string textures[4] = { "gold 1", "gold 1", "gold 3", "gold 4" };
-				float * uv = new float[8]{ 0,0, 1,0, 1,1, 0,1, };
-				meshRenderer->SetTextureRandom(textures, 4, uv, true);
+				meshRenderer->SetTextureRandom(textures, 4, new float[8]{ 0,0, 1,0, 1,1, 0,1, }, true);
 				gold->AddComponent(meshRenderer);
 
 				Gold * goldCom = new Gold(player);
@@ -420,8 +438,7 @@ void Game::SetupLevel(int levelNumber)
 
 				MeshRenderer * meshRenderer = new MeshRenderer();
 				meshRenderer->SetVertices(new float[12]{ .5, -.5, 0,   -.5, -.5, 0, -.5, .5, 0,    .5, .5, 0 }, 4);
-				float * uv = new float[8]{ 0,0, 1,0, 1,1, 0,1, };
-				meshRenderer->SetTexture("health", uv, true);
+				meshRenderer->SetTexture("health", new float[8]{ 0,0, 1,0, 1,1, 0,1, }, true);
 				health->AddComponent(meshRenderer);
 
 				Health * healthCom = new Health(player);
@@ -455,15 +472,9 @@ void Game::SetupLevel(int levelNumber)
 					MeshRenderer * meshRenderer = new MeshRenderer();
 					meshRenderer->SetVertices(new float[12]{ .5, -.5, 0,   -.5, -.5, 0, -.5, .5, 0,    .5, .5, 0, }, 4);
 					if (flipDoor)
-					{
-						float * uv = new float[8]{ 0,0, 1,0, 1,1, 0,1, };
-						meshRenderer->SetTexture("door", uv, false);
-					}
+						meshRenderer->SetTexture("door", new float[8]{ 0,0, 1,0, 1,1, 0,1, }, false);
 					else
-					{
-						float * uv = new float[8]{ 1,0, 0,0, 0,1, 1,1, };
-						meshRenderer->SetTexture("door", uv, false);
-					}
+						meshRenderer->SetTexture("door", new float[8]{ 1,0, 0,0, 0,1, 1,1, }, false);
 					meshRenderer->doubleSided = true;
 					door->AddComponent(meshRenderer);
 
@@ -495,9 +506,7 @@ void Game::SetupLevel(int levelNumber)
 
 															-.495f, -.5, -.5,  -.495f, -.5,  .5,
 															-.495f,  .5,  .5,  -.495f,  .5, -.5, }, 8);
-					float * uv = new float[16]{ 0,0, 1,0, 1,1, 0,1,
-												0,0, 1,0, 1,1, 0,1 };
-					meshRenderer->SetTexture("door frame", uv, false);
+					meshRenderer->SetTexture("door frame", new float[16]{ 0,0, 1,0, 1,1, 0,1, 0,0, 1,0, 1,1, 0,1 }, false);
 					frame->AddComponent(meshRenderer);
 
 					gameScene->AddGameObject(frame);
@@ -508,18 +517,16 @@ void Game::SetupLevel(int levelNumber)
 			if (c == 'p')
 			{
 				player->transform.position = Vector3(x * cellSize, 1.5, z * cellSize);
+				player->transform.rotation = Vector3(0, 90, 0);
 
 				Camera * camera = new Camera(true);
 				camera->backgroundColor = Color(BYTE(55));
-				//camera->backgroundColorTop = Color(BYTE(55));
-				//camera->backgroundColorBot = Color(BYTE(112));
+				gameScene->activeCamera = camera;
 				player->AddComponent(camera);
-
-				player->AddComponent(playerCom);
 
 				MeshRenderer * meshRenderer = new MeshRenderer();
 				meshRenderer->SetVertices(new float[12]{ -.2f, .5f, -.2f , .2f, .5f, -.2f , .2f,  .5f, .2f ,-.2f, .5f, .2f }, 4);
-				meshRenderer->SetColor(0, 255, 0);
+				meshRenderer->SetTexture("player", new float[8] {1,0, 0,0, 0,1, 1,1}, false);
 				player->AddComponent(meshRenderer);
 
 				Collider * collider = new Collider();
@@ -532,8 +539,7 @@ void Game::SetupLevel(int levelNumber)
 		}
 	}
 	//floor
-	GameObject * floor = new GameObject();
-
+	floor = new GameObject();
 	floor->transform.position = Vector3(size / 2 * cellSize, 0, size / 2 * cellSize);
 	floor->transform.scale = Vector3(size * cellSize, 1, size * cellSize);
 
@@ -543,12 +549,13 @@ void Game::SetupLevel(int levelNumber)
 			-.5, 0,-.5,    .5, 0,-.5,
 			 .5, 0, .5,   -.5, 0, .5
 		}, 4);
-	meshRenderer->SetColor(0.44f);
+	meshRenderer->SetTexture("floor", new float[8]{ 1,0, 0,0, 0,1, 1,1 }, false);
 	floor->AddComponent(meshRenderer);
 
 	gameScene->AddGameObject(floor);
 
-
+	for (int i = 0; i < size; i++)
+		delete[] levelCells[i];
 	delete[] levelCells;
 }
 void Game::SetupGameUI()
@@ -610,10 +617,6 @@ void Game::GameLoop()
 		SetupLevel(1);
 		Engine::I()->activeScene = gameScene;
 
-		delete introScene;
-		delete introCameraGameObject;
-		delete introCameraComponent;
-		delete introBackground;
 	}
 	else if (Game::gameOver)
 	{
@@ -631,7 +634,7 @@ void Game::GameLoop()
 		if (Input::KeyDown(Input::Keys::N1))
 		{
 			player->GetComponent(Player().GetName())->enabled = true;
-			((Camera *)player->GetComponent(Camera().GetName()))->Use();
+			gameScene->activeCamera = ((Camera *)player->GetComponent(Camera().GetName()));
 
 			freeCamera->enabled = false;
 		}
@@ -641,17 +644,17 @@ void Game::GameLoop()
 			player->GetComponent(Player().GetName())->enabled = false;
 
 			freeCamera->enabled = true;
-			((Camera *)freeCamera->GetComponent(Camera().GetName()))->Use();
+			gameScene->activeCamera = ((Camera *)freeCamera->GetComponent(Camera().GetName()));
 		}
 
 		if (Input::KeyDown(Input::Keys::N3))
 			Collider::showWireframe = !Collider::showWireframe;
 
 		if (Input::KeyDown(Input::Keys::N4))
-			MeshRenderer::showWireframe = !MeshRenderer::showWireframe;
+			player->GetComponent(Collider().GetName())->enabled = !player->GetComponent(Collider().GetName())->enabled;
 
 		if (Input::KeyDown(Input::Keys::N5))
-			player->GetComponent(Collider().GetName())->enabled = !player->GetComponent(Collider().GetName())->enabled;
+			ResetGame();
 
 		if (Input::KeyDown(Input::Keys::ESCAPE))
 		{
@@ -661,43 +664,42 @@ void Game::GameLoop()
 			else
 				Input::HideCursor();
 		}
-			
 	}
 }
 
 void Game::WinGame()
 {
-	Scene * scene = new Scene();
+	winScene = new Scene();
 	GameObject * cameraGameObject = new GameObject();
 	Camera * cameraComponent = new Camera();
-	cameraComponent->Use();
+	winScene->activeCamera = cameraComponent;
 	cameraGameObject->AddComponent(cameraComponent);
-	scene->AddGameObject(cameraGameObject);
+	winScene->AddGameObject(cameraGameObject);
 
 	UIImage * background = new UIImage();
 	background->SetTexture("win background", new float[8]{ 0, 0, 0, 1, 1, 1, 1, 0, });
 	background->size = Vector2(800, 600);
 	background->position = Vector2(0, 0);
-	scene->AddUIElement(background);
+	winScene->AddUIElement(background);
 
-	Engine::I()->activeScene = scene;
+	Engine::I()->activeScene = winScene;
 	Game::gameOver = true;
 }
 void Game::LoseGame()
 {
-	Scene * scene = new Scene();
+	deadScene = new Scene();
 	GameObject * cameraGameObject = new GameObject();
 	Camera * cameraComponent = new Camera();
-	cameraComponent->Use();
+	deadScene->activeCamera = cameraComponent;
 	cameraGameObject->AddComponent(cameraComponent);
-	scene->AddGameObject(cameraGameObject);
+	deadScene->AddGameObject(cameraGameObject);
 
 	UIImage * background = new UIImage();
 	background->SetTexture("dead background", new float[8]{ 0, 0, 0, 1, 1, 1, 1, 0, });
 	background->size = Vector2(800, 600);
 	background->position = Vector2(0, 0);
-	scene->AddUIElement(background);
+	deadScene->AddUIElement(background);
 
-	Engine::I()->activeScene = scene;
+	Engine::I()->activeScene = deadScene;
 	Game::gameOver = true;
 }

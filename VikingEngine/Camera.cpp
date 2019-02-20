@@ -10,32 +10,15 @@
 
 Camera::Camera(bool use)
 {
-	if (use)
-		Use();
 }
 Camera::~Camera()
 {
 }
 
-void Camera::Use()
-{
-	use = true;
-}
-
-void Camera::Update(Scene * scene)
-{
-	if (use)
-	{
-		use = false;
-		scene->activeCamera = this;
-	}
-}
 void Camera::Draw1(Scene * scene)
 {
 	if (scene->activeCamera != this)
 		return;
-
-	//clear scene
 
 	//set perspective
 	glMatrixMode(GL_PROJECTION_MATRIX);

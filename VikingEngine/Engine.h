@@ -15,10 +15,8 @@ private:
 	int windowHeight;
 
 public:
-	DLLEXTERN static Engine * I();
-
-	//the scene that is rendered
 	Scene * activeScene;
+	DLLEXTERN static Engine * I();
 
 	DLLEXTERN Engine(string name, int height, int width, void (*start)(), void (*gameLoop)());
 	DLLEXTERN ~Engine();

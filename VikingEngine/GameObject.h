@@ -21,17 +21,15 @@ private:
 	float distanceToCamera;
 
 	//list of components the game object has on it
-	//I use a map so I can find a component by its type later
-	std::unordered_map<string, Component *> * componentsCamera;
-	std::unordered_map<string, Component *> * componentsPhysics;
-	std::unordered_map<string, Component *> * componentsNormal;
+	std::unordered_map<string, Component *> componentsCamera;
+	std::unordered_map<string, Component *> componentsPhysics;
+	std::unordered_map<string, Component *> componentsNormal;
 
 public:
 	bool enabled = true;
 	bool distanceToCameraIsImportant;
 
 	//name of the game object.
-	string name = "NO NAME";
 	string tag = "NO TAG";
 	Transform transform;
 
@@ -40,18 +38,14 @@ public:
 
 	DLLEXTERN float GetDistanceToCamera();
 
-	//update the game objects components.
-	void UpdateCameraComponents(Scene * scene);
+	void UpdateSelf(Scene * scene);
 	void UpdatePhysicsComponents(Scene * scene);
 	void UpdateNormalComponents(Scene * scene);
-
-	//draw the game objects components.
-	void UpdateSelf(Scene * scene);
 	void DrawCameraComponents(Scene * scene);
 	void Draw1(Scene * scene);
 	void Draw2(Scene * scene);
 
-	DLLEXTERN bool HasColliders();
+	bool HasColliders();
 
 	//add game object to scene. You can not add the same object twice.
 	DLLEXTERN Component * AddComponent(Component * com);
@@ -64,7 +58,4 @@ public:
 
 	//returns game object id
 	DLLEXTERN int GetId() const;
-
-	// == and < operators for GameObject objects. We need to use unordered_set.
-	bool operator==(const GameObject & other) const;
 };

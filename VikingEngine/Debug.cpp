@@ -27,11 +27,8 @@ void Debug::Log(string value)
 	//combine info to one line
 	string finalString = "***" + time + " - " + value + "\n";
 
-	//convert to cstring
-	const char * output = finalString.c_str();
-
 	//write to output window
-	OutputDebugString(output);
+	OutputDebugString(finalString.c_str());
 }
 void Debug::Log(int value)
 {

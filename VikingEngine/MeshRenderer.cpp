@@ -6,65 +6,35 @@
 #include <iostream>
 typedef std::basic_string<char> string;
 
-bool MeshRenderer::showWireframe = false;
-
 MeshRenderer::MeshRenderer()
 {
-	(*this).vertices = nullptr;
-	(*this).colors = nullptr;
-	(*this).texture_coord = nullptr;
 }
 MeshRenderer::~MeshRenderer()
 {
+	delete texture_coord;
 	delete vertices;
-	delete colors;
 }
 
 void MeshRenderer::SetVertices(float * vertices, int verticesCount)
 {
+	delete (*this).vertices;
+
 	(*this).verticesCount = verticesCount;
 	(*this).vertices = vertices;
 	hasVertices = true;
 }
-
 void MeshRenderer::SetTexture(string textureName, float * texture_coord, bool useAlpha)
 {
+	delete (*this).texture_coord;
+
 	texture = Textures::GetTexture(textureName);
 	(*this).texture_coord = texture_coord;
 	(*this).useAlpha = useAlpha;
-	useTexture = true;
-	useColor = false;
 }
-
-void MeshRenderer::SetTextureRandom(string * textures, int count, float * texture_coord, bool useAlpha)
+void MeshRenderer::SetTextureRandom(string textures[], int count, float * texture_coord, bool useAlpha)
 {
 	int index = (rand() % (count));
 	SetTexture(textures[index], texture_coord, useAlpha);
-}
-
-void MeshRenderer::SetColor(float * colors)
-{
-	(*this).colors = colors;
-	useTexture = false;
-	useColor = true;
-}
-void MeshRenderer::SetColor(float color)
-{
-	(*this).colors = new float[12]
-	{
-		color, color, color,   color, color, color,   color, color, color,   color, color, color,
-	};
-	useTexture = false;
-	useColor = true;
-}
-void MeshRenderer::SetColor(float r, float g, float b)
-{
-	(*this).colors = new float[12]
-	{
-		r, g, b,   r, g, b,   r, g, b,   r, g, b,
-	};
-	useTexture = false;
-	useColor = true;
 }
 
 void MeshRenderer::Draw()
@@ -85,10 +55,7 @@ void MeshRenderer::Draw()
 	//scale
 	glScalef(gameObject->transform.scale.x, gameObject->transform.scale.y, gameObject->transform.scale.z);
 	
-	if(showWireframe)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	if (doubleSided)
 		glDisable(GL_CULL_FACE);
@@ -101,20 +68,12 @@ void MeshRenderer::Draw()
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-	if (useTexture)
-	{
-		glEnable(GL_TEXTURE_2D);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glTexCoordPointer(2, GL_FLOAT, 0, texture_coord);
-	}
-	else if (useColor)
-	{
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, 0, colors);
-	}
+	glEnable(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, texture_coord);
 
 	//draw
 	glDrawArrays(GL_QUADS, 0, verticesCount);

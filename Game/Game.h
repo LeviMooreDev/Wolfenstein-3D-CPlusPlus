@@ -12,18 +12,18 @@ public:
 
 	//intro
 	Scene * introScene;
-	GameObject * introCameraGameObject;
-	Camera * introCameraComponent;
-	UIImage * introBackground;
+	Scene * gameScene;
+	static Scene * winScene;
+	static Scene * deadScene;
 
 	//game
 	bool skipNextFrameAndResetGame;
 	bool loadLevel;
 	static bool gameOver;
-	Scene * gameScene;
 	GameObject * player;
 	Player * playerCom;
 	GameObject * freeCamera;
+	GameObject * floor;
 
 	UIImage * handImage;
 	UIImage * hudWeapon;
@@ -40,6 +40,7 @@ public:
 	void SetupGameUI();
 	void Start();
 	void GameLoop();
+	void FreeMemory();
 	static void WinGame();
 	static void LoseGame();
 };

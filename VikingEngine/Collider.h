@@ -32,8 +32,8 @@ private:
 	Vector3 lastCenter;
 	Vector3 lastSize;
 
-	std::function<void(GameObject *)> onHit;
-	std::function<void(GameObject *)> onTrigger;
+	std::function<void(GameObject *)> onHit = nullptr;
+	std::function<void(GameObject *)> onTrigger = nullptr;
 
 	void Update(Scene * scene);
 	void Draw2(Scene * scene);

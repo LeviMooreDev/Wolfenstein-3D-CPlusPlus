@@ -10,7 +10,6 @@ bool Collider::showWireframe = false;
 
 Collider::Collider()
 {
-	(*this).onHit = nullptr;
 }
 Collider::~Collider()
 {
@@ -27,15 +26,15 @@ void Collider::ListenForTrigger(std::function<void(GameObject *)> onTrigger)
 
 Vector3 Collider::Min()
 {
-	return Vector3(gameObject->transform.position.x - center.x - size.x / 2,
-				   gameObject->transform.position.y - center.y - size.y / 2,
-				   gameObject->transform.position.z - center.z - size.z / 2);
+	return Vector3(gameObject->transform.position.x - center.x - size.x / 2.0f,
+				   gameObject->transform.position.y - center.y - size.y / 2.0f,
+				   gameObject->transform.position.z - center.z - size.z / 2.0f);
 }
 Vector3 Collider::Max()
 {
-	return Vector3(gameObject->transform.position.x + center.x + size.x / 2,
-				   gameObject->transform.position.y + center.y + size.y / 2,
-				   gameObject->transform.position.z + center.z + size.z / 2);
+	return Vector3(gameObject->transform.position.x + center.x + size.x / 2.0f,
+				   gameObject->transform.position.y + center.y + size.y / 2.0f,
+				   gameObject->transform.position.z + center.z + size.z / 2.0f);
 }
 
 void Collider::Update(Scene * scene)
@@ -118,7 +117,6 @@ void Collider::Update(Scene * scene)
 										if (checkCountLeft == 0)
 										{
 											gameObject->transform.position = lastPosition;
-											Debug::Log(1);
 										}
 										else
 										{
@@ -158,8 +156,6 @@ void Collider::Draw2(Scene * scene)
 {
 	if (!Collider::showWireframe)
 		return;
-
-	//glDepthMask(true);
 
 	glPushMatrix();
 

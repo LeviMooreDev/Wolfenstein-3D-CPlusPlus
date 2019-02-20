@@ -1,5 +1,5 @@
-﻿  Scene.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\scene.cpp(172): warning C4102: 'endLoop': unreferenced label
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre mitigation is enabled but Spectre mitigated libraries are not found.  Verify that the Visual Studio Workload includes the Spectre mitigated libraries.  See https://aka.ms/Ofhn4c for more information.
+  Input.cpp
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
      Creating library E:\Projects\_School\CPlusPlus\FinalAssignment\VikingEngine\Build\Engine.lib and object E:\Projects\_School\CPlusPlus\FinalAssignment\VikingEngine\Build\Engine.exp

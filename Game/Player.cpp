@@ -30,6 +30,8 @@ Player::Player(UIImage * handImage, UIImage * hudWeapon, UINumber * hudGold, UIN
 	knifeAnimation.loop = false;
 	knifeAnimation.waitTime = 0.08f;
 	knifeAnimation.run = false;
+
+	nextFireTime = Time::GetTimeSinceStart() + fireDelay;
 }
 Player::~Player()
 {
@@ -45,22 +47,27 @@ void Player::Move()
 {
 	gameObject->transform.rotation += Vector3::Up() * Input::MouseMoveDirection().x * lookSpeed * Time::GetDeltaTime();
 
+	Vector3 dir;
+
 	if (Input::KeyHold(Input::Keys::W))
 	{
-		gameObject->transform.position += gameObject->transform.Forward() * walkSpeed * Time::GetDeltaTime();
+		dir += gameObject->transform.Forward();
 	}
 	if (Input::KeyHold(Input::Keys::S))
 	{
-		gameObject->transform.position += gameObject->transform.Back() * walkSpeed * Time::GetDeltaTime();
+		dir += gameObject->transform.Back();
 	}
 	if (Input::KeyHold(Input::Keys::A))
 	{
-		gameObject->transform.position += gameObject->transform.Left() * walkSpeed * Time::GetDeltaTime();
+		dir += gameObject->transform.Left();
 	}
 	if (Input::KeyHold(Input::Keys::D))
 	{
-		gameObject->transform.position += gameObject->transform.Right() * walkSpeed * Time::GetDeltaTime();
+		dir += gameObject->transform.Right();
 	}
+
+	dir.Normalize();
+	gameObject->transform.position += dir * walkSpeed * Time::GetDeltaTime();
 }
 void Player::Weapon()
 {
@@ -76,8 +83,12 @@ void Player::Weapon()
 	else
 		handImage->SetTexture("knife animation", new float[8]{ startX, 0, startX, 1, endX, 1, endX, 0, });
 
-	if (Input::KeyDown(Input::Keys::SPACE))
+	if (Input::KeyDown(Input::Keys::SPACE) || Input::MouseLeftClick())
 	{
+		if (Time::GetTimeSinceStart() < nextFireTime)
+			return;
+		nextFireTime = Time::GetTimeSinceStart() + fireDelay;
+
 		if (hasPistol)
 			Audio::Play("pistol");
 		else
@@ -118,13 +129,17 @@ void Player::Hud()
 	}
 }
 
-void Player::AddHealth(int amount)
+bool Player::AddHealth(int amount)
 {
+	if (health >= 100)
+		return false;
+
 	health += amount;
-	if (health > 100)
+	if (health >= 100)
 		health = 100;
 
 	hudHealth->number = health;
+	return true;
 }
 void Player::AddGold(int amount)
 {

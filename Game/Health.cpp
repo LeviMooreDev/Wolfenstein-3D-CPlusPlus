@@ -12,7 +12,9 @@ Health::~Health()
 
 void Health::Hit(GameObject * other)
 {
-	((Player*)other->GetComponent(Player().GetName()))->AddHealth(10);
-	gameObject->enabled = false;
-	Audio::Play("health");
+	if (((Player*)other->GetComponent(Player().GetName()))->AddHealth(10))
+	{
+		gameObject->enabled = false;
+		Audio::Play("health");
+	}
 }

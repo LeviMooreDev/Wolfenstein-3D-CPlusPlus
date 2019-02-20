@@ -8,45 +8,43 @@
 #include "Input.h"
 #include <algorithm>
 #include <iostream>
+#include "GameObject.h"
 
 Scene::Scene()
 {
 }
 Scene::~Scene()
 {
-	delete gameObjects;
-	delete uiElements;
+	for (auto gameObject = gameObjects.begin(); gameObject != gameObjects.end(); gameObject++)
+		delete *gameObject;
+	gameObjects.clear();
+
+	for (auto uiElement = uiElements.begin(); uiElement != uiElements.end(); uiElement++)
+		delete *uiElement;
+	uiElements.clear();
 }
 
 void Scene::Update()
 {
-	std::vector<GameObject *>::iterator go = gameObjects->begin();
+	std::vector<GameObject *>::iterator go = gameObjects.begin();
 	
-	while (go != gameObjects->end())
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->UpdateSelf(this);
 		go++;
 	}
 
-	go = gameObjects->begin();
-	while (go != gameObjects->end())
-	{
-		if ((*go)->enabled)
-			(*go)->UpdateCameraComponents(this);
-		go++;
-	}
-
-	go = gameObjects->begin();
-	while (go != gameObjects->end())
+	go = gameObjects.begin();
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->UpdateNormalComponents(this);
 		go++;
 	}
 
-	go = gameObjects->begin();
-	while (go != gameObjects->end())
+	go = gameObjects.begin();
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->UpdatePhysicsComponents(this);
@@ -56,8 +54,8 @@ void Scene::Update()
 void Scene::Draw()
 {
 	//draw camera
-	std::vector<GameObject *>::iterator go = gameObjects->begin();
-	while (go != gameObjects->end())
+	std::vector<GameObject *>::iterator go = gameObjects.begin();
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->DrawCameraComponents(this);
@@ -66,8 +64,8 @@ void Scene::Draw()
 
 	SortGameObjectsByDistanceToCamera();
 	//draw 1
-	go = gameObjects->begin();
-	while (go != gameObjects->end())
+	go = gameObjects.begin();
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->Draw1(this);
@@ -75,8 +73,8 @@ void Scene::Draw()
 	}
 
 	//draw 2
-	go = gameObjects->begin();
-	while (go != gameObjects->end())
+	go = gameObjects.begin();
+	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
 			(*go)->Draw2(this);
@@ -91,16 +89,16 @@ void Scene::UI()
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glDisable(GL_DEPTH_TEST);
 
-	std::unordered_set<UIBase *>::iterator uiElement = uiElements->begin();
-	while (uiElement != uiElements->end())
+	std::unordered_set<UIBase *>::iterator uiElement = uiElements.begin();
+	while (uiElement != uiElements.end())
 	{
 		if ((*uiElement)->enabled)
 			(*uiElement)->Update();
 		uiElement++;
 	}
 
-	uiElement = uiElements->begin();
-	while (uiElement != uiElements->end())
+	uiElement = uiElements.begin();
+	while (uiElement != uiElements.end())
 	{
 		if ((*uiElement)->enabled)
 			(*uiElement)->Draw();
@@ -112,25 +110,19 @@ void Scene::UI()
 
 void Scene::SortGameObjectsByDistanceToCamera()
 {
-	if (gameObjects->size() < 2)
+	if (gameObjects.size() < 2)
 		return;
 
-	if (lastGameObjectCount != gameObjects->size())
+	if (lastGameObjectCount != gameObjects.size())
 	{
-		lastGameObjectCount = gameObjects->size();
+		lastGameObjectCount = gameObjects.size();
 		bool swapp = true;
 		while (swapp)
 		{
 			swapp = false;
-			std::vector<GameObject *>::iterator go = gameObjects->begin();
-			while (go != gameObjects->end() - 1)
+			std::vector<GameObject *>::iterator go = gameObjects.begin();
+			while (go != gameObjects.end() - 1)
 			{
-				if ((*go)->GetDistanceToCamera() > 20)
-				{
-					go++;
-					continue;
-				}
-
 				if (!(*go)->distanceToCameraIsImportant && (*(go + 1))->distanceToCameraIsImportant)
 				{
 					std::iter_swap(go, go + 1);
@@ -147,15 +139,9 @@ void Scene::SortGameObjectsByDistanceToCamera()
 	{
 		swapp = false;
 
-		std::vector<GameObject *>::iterator go = gameObjects->begin();
-		while (go != gameObjects->end() - 1)
+		std::vector<GameObject *>::iterator go = gameObjects.begin();
+		while (go != gameObjects.end() - 1)
 		{
-			if ((*go)->GetDistanceToCamera() > 20)
-			{
-				go++;
-				continue;
-			}
-
 			if (!(*go)->distanceToCameraIsImportant)
 				break;
 
@@ -175,47 +161,37 @@ void Scene::SortGameObjectsByDistanceToCamera()
 
 GameObject * Scene::AddGameObject(GameObject *go)
 {
-	gameObjects->push_back(go);
+	gameObjects.push_back(go);
 	return go;
 }
 void Scene::RemoveGameObject(GameObject * go)
 {
-	gameObjects->erase(std::remove(gameObjects->begin(), gameObjects->end(), go), gameObjects->end());
+	gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), go), gameObjects.end());
 }
 std::vector<GameObject *> * Scene::GetAllGameObjects()
 {
-	return gameObjects;
+	return &gameObjects;
 }
 
 UIBase * Scene::AddUIElement(UIBase * element)
 {
-	if (uiElements->count(element) != 0)
+	if (uiElements.count(element) != 0)
 	{
 		Debug::Error("Trying to add same ui element to a scene twice. ID: " + std::to_string(element->GetId()));
 		return element;
 	}
 
-	uiElements->insert(element);
+	uiElements.insert(element);
 	return element;
 }
 
 void Scene::RemoveUIElement(UIBase * element)
 {
-	if (uiElements->count(element) != 1)
+	if (uiElements.count(element) != 1)
 	{
 		Debug::Error("Trying to remove ui element that is not in the scene. ID: " + std::to_string(element->GetId()));
 		return;
 	}
 
-	uiElements->erase(element);
-}
-
-std::unordered_set<UIBase*>* Scene::GetUIElements()
-{
-	return uiElements;
-}
-
-bool Scene::IsEmpty()
-{
-	return gameObjects->empty();
+	uiElements.erase(element);
 }

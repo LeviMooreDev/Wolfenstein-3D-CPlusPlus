@@ -10,9 +10,8 @@
 class Scene
 {
 private:
-	//list of game objects in the scene
-	std::vector<GameObject *> * gameObjects = new std::vector<GameObject *>();
-	std::unordered_set<UIBase *> * uiElements = new std::unordered_set<UIBase *>();
+	std::vector<GameObject *> gameObjects;
+	std::unordered_set<UIBase *> uiElements;
 
 	int lastGameObjectCount;
 public:
@@ -27,9 +26,6 @@ public:
 
 	void SortGameObjectsByDistanceToCamera();
 
-	//returns true if the scene is empty
-	DLLEXTERN bool IsEmpty();
-
 	//add game object to scene. You can not add the same object twice.
 	DLLEXTERN GameObject * AddGameObject(GameObject * go);
 	//remove game object from scene.
@@ -41,6 +37,4 @@ public:
 	DLLEXTERN UIBase * AddUIElement(UIBase * element);
 	//remove ui element from scene.
 	DLLEXTERN void RemoveUIElement(UIBase * element);
-	//returns all ui elements in the scene
-	DLLEXTERN std::unordered_set<UIBase*>* GetUIElements();
 };

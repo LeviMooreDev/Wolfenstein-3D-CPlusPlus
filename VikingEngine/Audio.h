@@ -7,7 +7,7 @@ typedef std::basic_string<char> string;
 class Audio
 {
 private:
-	static std::unordered_map<string, string> * audioIds;
+	static std::unordered_map<string, string> audioIds;
 
 public:
 	static void Setup();

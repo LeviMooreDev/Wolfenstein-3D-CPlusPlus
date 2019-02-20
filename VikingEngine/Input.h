@@ -15,9 +15,11 @@ private:
 	static std::map<int, bool> hold;
 	static std::map<int, bool> down;
 	static std::map<int, bool> up;
+	static bool mouseLeftClicked;
 
 	static void KeyInputCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
 	static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+	static void MouseClickCallback(GLFWwindow* window, int button, int action, int mods);
 public:
 	enum Keys
 	{
@@ -146,6 +148,7 @@ public:
 	DLLEXTERN static bool KeyUp(Keys key);
 	DLLEXTERN static bool KeyDown(Keys key);
 
+	DLLEXTERN static bool MouseLeftClick();
 	DLLEXTERN static Vector2 MousePosition();
 	DLLEXTERN static Vector2 MouseMoveDirection();
 

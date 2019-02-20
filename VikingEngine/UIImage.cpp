@@ -8,10 +8,13 @@ UIImage::UIImage()
 }
 UIImage::~UIImage()
 {
+	delete (*this).texture_coord;
 }
 
 void UIImage::SetTexture(string textureName, float * texture_coord)
 {
+	delete (*this).texture_coord;
+
 	texture = Textures::GetTexture(textureName);
 	(*this).texture_coord = texture_coord;
 	hasTexture = true;

@@ -31,8 +31,7 @@ void UINumber::Draw()
 		char cn = numberAsString[i];
 		float startX = (cn - '0') * dirStep;
 		float endX = startX + dirStep;
-		float * texture_coord;
-		texture_coord = new float[8]{ startX, 0, startX, 1, endX, 1, endX, 0, };
+		float texture_coord[8] = { startX, 0, startX, 1, endX, 1, endX, 0, };
 
 		glPushMatrix();
 

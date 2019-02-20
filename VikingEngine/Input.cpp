@@ -14,6 +14,7 @@ GLFWwindow * Input::window;
 std::map<int, bool> Input::hold = std::map<int, bool>();
 std::map<int, bool> Input::down = std::map<int, bool>();
 std::map<int, bool> Input::up	= std::map<int, bool>();
+bool Input::mouseLeftClicked = false;
 
 bool Input::KeyUp(Keys key)
 {
@@ -26,6 +27,11 @@ bool Input::KeyDown(Keys key)
 bool Input::KeyHold(Keys key)
 {
 	return Input::hold[key];
+}
+
+bool Input::MouseLeftClick()
+{
+	return mouseLeftClicked;
 }
 
 Vector2 Input::MousePosition()
@@ -67,12 +73,18 @@ void Input::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
 	if (lastMousePosition == Vector2())
 		lastMousePosition = currentMousePosition;
 }
+void Input::MouseClickCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+		mouseLeftClicked = true;
+}
 
 void Input::Setup(GLFWwindow * window)
 {
 	Input::window = window;
 	glfwSetKeyCallback(window, Input::KeyInputCallback);
 	glfwSetCursorPosCallback(window, CursorPositionCallback);
+	glfwSetMouseButtonCallback(window, MouseClickCallback);
 
 	for (int i = Input::Keys::A; i != Input::Keys::MENU; i++)
 	{
@@ -98,6 +110,7 @@ void Input::EndLoop()
 
 	//mouse
 	lastMousePosition = currentMousePosition;
-
+	mouseLeftClicked = false;
+	
 	glfwPollEvents();
 }

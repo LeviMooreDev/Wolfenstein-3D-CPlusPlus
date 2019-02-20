@@ -1,4 +1,5 @@
-﻿  EndGame.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre mitigation is enabled but Spectre mitigated libraries are not found.  Verify that the Visual Studio Workload includes the Spectre mitigated libraries.  See https://aka.ms/Ofhn4c for more information.
+  EndGame.cpp
   Enemy.cpp
   Game.cpp
   string_view is only available with C++17 or later.
@@ -16,6 +17,7 @@
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\door.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\door_frame.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\end_game.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\floor.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_2.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\gold_3.png
@@ -37,6 +39,7 @@
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_4.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\object_5.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\pistol.png
+  E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\player.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\stone_wall_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\stone_wall_2.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\stone_wall_3.png
@@ -44,7 +47,7 @@
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\wood_wall_1.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\wood_wall_2.png
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Textures\wood_wall_3.png
-         33 file(s) copied.
+         35 file(s) copied.
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.l
   E:\Projects\_School\CPlusPlus\FinalAssignment\Game\Levels\level1.png
           2 file(s) copied.

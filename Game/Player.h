@@ -8,11 +8,13 @@
 class Player : public Component
 {
 private:
-	int health = 1;
+	int health = 100;
 	int gold = 0;
 	float walkSpeed = 10;
-	float lookSpeed = 25;
+	float lookSpeed = 13;
 	bool hasPistol;
+	float nextFireTime;
+	float fireDelay = 0.2f;
 	UIImage * handImage;
 	UIImage * hudWeapon;
 	UINumber * hudGold;
@@ -30,7 +32,7 @@ public:
 	void Weapon();
 	void Hud();
 
-	void AddHealth(int amount);
+	bool AddHealth(int amount);
 	void AddGold(int amount);
 	void GivePistol();
 	void Hit();

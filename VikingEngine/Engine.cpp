@@ -75,19 +75,18 @@ Engine::Engine(string name, int width, int height, void (*start)(), void (*gameL
 	{
 		Time::Update();
 
-		if (activeScene == nullptr)
-		{
-			return;
-		}
 
 		glLoadIdentity();
 		glDepthMask(true);
 
-		activeScene->Update();
-		activeScene->Draw();
+		if (activeScene != nullptr)
+		{
+			activeScene->Update();
+			activeScene->Draw();
 
-		glLoadIdentity();
-		activeScene->UI();
+			glLoadIdentity();
+			activeScene->UI();
+		}
 
 		glfwSwapBuffers(window);
 

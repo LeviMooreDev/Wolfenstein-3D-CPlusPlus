@@ -7,8 +7,6 @@
 class Camera : public Component
 {
 private:
-	bool use;
-	void Update(Scene * scene);
 	void Draw1(Scene * scene);
 
 public:
@@ -19,8 +17,6 @@ public:
 
 	DLLEXTERN Camera(bool use = false);
 	DLLEXTERN ~Camera();
-
-	DLLEXTERN void Use();
 
 	string GetName() { return "Camera"; };
 };
