@@ -1,31 +1,7 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(402,5): warning MSB8038: Spectre mitigation is enabled but Spectre mitigated libraries are not found.  Verify that the Visual Studio Workload includes the Spectre mitigated libraries.  See https://aka.ms/Ofhn4c for more information.
-  Audio.cpp
-  Camera.cpp
-  Collider.cpp
-  Color.cpp
-  Component.cpp
-  Debug.cpp
   Engine.cpp
-  GameObject.cpp
-  Input.cpp
-  MeshRenderer.cpp
-  Raycast.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\raycast.cpp(96): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-  Scene.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\scene.cpp(158): warning C4102: 'endLoop': unreferenced label
   Textures.cpp
-  Time.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\time.cpp(9): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-  Transform.cpp
-  UIBase.cpp
-  UIImage.cpp
-  UINumber.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\uinumber.cpp(31): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-  Vector2.cpp
-  Vector3.cpp
-e:\projects\_school\cplusplus\finalassignment\vikingengine\vector3.cpp(149): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
   Generating Code...
-e:\projects\_school\cplusplus\finalassignment\vikingengine\vector3.cpp(257): warning C4715: 'Vector3::operator[]': not all control paths return a value
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
      Creating library E:\Projects\_School\CPlusPlus\FinalAssignment\VikingEngine\Build\Engine.lib and object E:\Projects\_School\CPlusPlus\FinalAssignment\VikingEngine\Build\Engine.exp

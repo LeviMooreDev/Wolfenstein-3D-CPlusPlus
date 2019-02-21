@@ -7,24 +7,16 @@
 #include <exception>
 typedef std::basic_string<char> string;
 
-Debug::Debug()
-{
-}
-
-Debug::~Debug()
-{
-}
-
 void Debug::Log(string value)
 {
-	//time
+	//find time in seconds with a precision of 2 since the game started.
 	std::ostringstream streamObj3;
 	streamObj3 << std::fixed;
 	streamObj3 << std::setprecision(1);
 	streamObj3 << glfwGetTime();
 	string time = "Time: " + streamObj3.str();
 
-	//combine info to one line
+	//combine info into one line
 	string finalString = "***" + time + " - " + value + "\n";
 
 	//write to output window
@@ -46,6 +38,7 @@ void Debug::Log(float value)
 void Debug::Error(string error, bool stopGame)
 {
 	Log("ERROR: " + error);
+
 	if (stopGame || ALLWAYS_THROW)
 		throw std::exception(error.c_str());
 }

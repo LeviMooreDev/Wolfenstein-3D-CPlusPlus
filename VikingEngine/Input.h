@@ -5,22 +5,38 @@
 #include <iterator> 
 #include <map>
 
+//we create empty GLFWwindow class because we need it as a parameter, but if we include it the project using our Engine.dll file would also need to include glfw3.lib and reeglut.lib
+
 struct GLFWwindow;
+
 class Input
 {
 private:
-	static Vector2 currentMousePosition;
-	static Vector2 lastMousePosition;
+	//that register the input and send it to us
 	static GLFWwindow * window;
+
+	//current mouse position
+	static Vector2 currentMousePosition;
+	//last mouse position
+	static Vector2 lastMousePosition;
+	//map of all keys and if one is being held down the value is true
 	static std::map<int, bool> hold;
+	//map of all keys and if one has been pressed this frame the value is true
 	static std::map<int, bool> down;
+	//map of all keys and if one has been released this frame the value is true
 	static std::map<int, bool> up;
+	//true if the left mouse button was clicked this frame
 	static bool mouseLeftClicked;
 
+	//callback method receiving all keyboard events
 	static void KeyInputCallback(GLFWwindow * window, int key, int scancode, int action, int mods);
+	//callback method receiving all mouse movement events
 	static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+	//callback method receiving all mouse click events
 	static void MouseClickCallback(GLFWwindow* window, int button, int action, int mods);
+
 public:
+	//enum with all the keys the player can check with
 	enum Keys
 	{
 		A = 65,
@@ -144,17 +160,28 @@ public:
 		MENU = 348
 	};
 
+	//returns true of the key was active this frame
 	DLLEXTERN static bool KeyHold(Keys key);
-	DLLEXTERN static bool KeyUp(Keys key);
+	//returns true of the key was released this frame
 	DLLEXTERN static bool KeyDown(Keys key);
+	//returns true of the key was pressed this frame
+	DLLEXTERN static bool KeyUp(Keys key);
 
+	//returns true if the left mouse button was clicked this frame
 	DLLEXTERN static bool MouseLeftClick();
+	//returns the mouse position
 	DLLEXTERN static Vector2 MousePosition();
+	//returns the direction the mouse is moving
 	DLLEXTERN static Vector2 MouseMoveDirection();
 
+	//show the mouse cursor
 	DLLEXTERN static void ShowCursor();
+	//hide the mouse cursor
 	DLLEXTERN static void HideCursor();
 
+	//does some work to make sure the input class is ready for use
 	static void Setup(GLFWwindow * window);
-	static void EndLoop();
+
+	//reset user input
+	static void ResetInput();
 };

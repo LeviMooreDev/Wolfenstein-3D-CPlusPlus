@@ -5,27 +5,36 @@
 #include <iostream>
 typedef std::basic_string<char> string;
 
-std::unordered_map<string, unsigned int> Textures::textureIds;
+//declare static fields
+std::unordered_map<string, GLuint> Textures::textureIds;
 
 void Textures::AddTexture(string name, string filePath)
 {
+	//check if the texture has already been added
 	if (textureIds.count(name) != 0)
 	{
 		Debug::Error("Trying to add two textures with the same name. Name: " + name + ". File: " + filePath);
 	}
 
-	string fullPath = ".\\Textures/" + filePath + ".png";
-	unsigned int id = SOIL_load_OGL_texture(fullPath.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
-	textureIds.insert(std::pair<string, unsigned int>(name, id));
+	//find fill path
+	string fullPath = "Textures/" + filePath + ".png";
+	
+	//load the texture using SOIL
+	GLuint id = SOIL_load_OGL_texture(fullPath.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
+
+	//add the texture id to textureIds map
+	textureIds.insert(std::pair<string, GLuint>(name, id));
 }
 
-unsigned int Textures::GetTexture(string name)
+GLuint Textures::GetTexture(string name)
 {
+	//check if the texture has been added
 	if (textureIds.count(name) == 0)
 	{
 		Debug::Error("Trying to get a texture that has not been added. Name: " + name);
 		return 0;
 	}
 
+	//return the texture with that name
 	return textureIds.find(name)->second;
 }

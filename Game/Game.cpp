@@ -76,6 +76,9 @@ void Game::GameLoop()
 	{
 		loadLevelNextUpdate = false;
 
+		//wait 2 seconds so the user has a chance to see the loading screen and realise what is going on
+		Sleep(2000);
+
 		//create new game scene and setup the free camera, ui and level
 		gameScene = new Scene();
 		SetupGameUI();
@@ -84,7 +87,6 @@ void Game::GameLoop()
 
 		//set the active scene to the game scene
 		Engine::I()->activeScene = gameScene;
-
 	}
 	//if the game is over
 	else if (Game::gameOver)
@@ -104,7 +106,7 @@ void Game::GameLoop()
 		if (Input::KeyDown(Input::Keys::N1))
 		{
 			player->GetComponent(PlayerComponentName)->enabled = true;
-			gameScene->activeCamera = ((Camera *)player->GetComponent(Camera().GetName()));
+			gameScene->activeCamera = ((Camera *)player->GetComponent(CameraComponentName));
 
 			freeCamera->enabled = false;
 		}
@@ -115,7 +117,7 @@ void Game::GameLoop()
 			player->GetComponent(PlayerComponentName)->enabled = false;
 
 			freeCamera->enabled = true;
-			gameScene->activeCamera = ((Camera *)freeCamera->GetComponent(Camera().GetName()));
+			gameScene->activeCamera = ((Camera *)freeCamera->GetComponent(CameraComponentName));
 		}
 
 		//if the player presses 3 toggle collider wireframe
@@ -124,7 +126,7 @@ void Game::GameLoop()
 
 		//if the player presses 4 toggle player collider component
 		if (Input::KeyDown(Input::Keys::N4))
-			player->GetComponent(Collider().GetName())->enabled = !player->GetComponent(Collider().GetName())->enabled;
+			player->GetComponent(ColliderComponentName)->enabled = !player->GetComponent(ColliderComponentName)->enabled;
 
 		//if the player presses 4 reset the game
 		if (Input::KeyDown(Input::Keys::N5))
@@ -588,7 +590,7 @@ void Game::SetupLevel(int levelNumber)
 
 				//add a collider component and make sure the collider is low enough so the player can shoot over it
 				Collider * collider = new Collider();
-				collider->center = Vector3(0, -.75f, 0);
+				collider->centerOffset = Vector3(0, -.75f, 0);
 				collider->size = Vector3(1, .5f, 1);
 				object->AddComponent(collider);
 
@@ -769,8 +771,8 @@ void Game::SetupLevel(int levelNumber)
 				player->transform.rotation = Vector3(0, 90, 0);
 
 				//added player camera
-				Camera * camera = new Camera(true);
-				camera->backgroundColor = Color(BYTE(55));
+				Camera * camera = new Camera();
+				camera->backgroundColor = Color(0.21f);
 				gameScene->activeCamera = camera;
 				player->AddComponent(camera);
 
@@ -842,7 +844,6 @@ void Game::SetupGameUI()
 	hudHealth->number = 100;
 	hudHealth->size = Vector2(20, 40);
 	hudHealth->position = Vector2(455, 10);
-	hudHealth->order = 0.1f;
 	gameScene->AddUIElement(hudHealth);
 
 	//player gold
@@ -850,7 +851,6 @@ void Game::SetupGameUI()
 	hudGold->number = 0;
 	hudGold->size = Vector2(20, 40);
 	hudGold->position = Vector2(190, 10);
-	hudGold->order = 0.1f;
 	gameScene->AddUIElement(hudGold);
 }
 

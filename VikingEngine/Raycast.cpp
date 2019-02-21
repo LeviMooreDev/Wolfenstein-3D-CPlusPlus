@@ -42,7 +42,7 @@ GameObject * Raycast::Send(Vector3 origin, Vector3 direction, Vector3 & point, G
 		//we use a scope here so we can bypass the code using goto
 		{
 			//get the game objects collider component
-			Collider * collider = (Collider *)(*gameObject)->GetComponent(Collider().GetName());
+			Collider * collider = (Collider *)(*gameObject)->GetComponent(ColliderComponentName);
 
 			if (!collider->enabled)
 				goto endloop;

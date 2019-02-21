@@ -145,6 +145,7 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
       <AdditionalIncludeDirectories>$(ProjectDir)Dependencies</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>COMPILING_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>false</ShowIncludes>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -169,6 +170,7 @@ copy /Y "$(TargetDir)$(ProjectName).lib" "$(SolutionDir)Game\Build\$(ProjectName
       <AdditionalIncludeDirectories>$(ProjectDir)Dependencies</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>COMPILING_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ShowIncludes>false</ShowIncludes>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -4,6 +4,7 @@
 
 typedef std::basic_string<char> string;
 
+//data type that can hold 3 floats and do vector math
 class DLLEXTERN Vector3
 {
 public:
@@ -11,33 +12,45 @@ public:
 	float y = 0;
 	float z = 0;
 
-	Vector3();
+	Vector3() { };
 	Vector3(float x, float y, float z);
-	~Vector3();
 
-	//returns Vector3(1,1,1)
+	//returns Vector3(1, 1, 1)
 	static Vector3 One();
+	//returns Vector3(value, value, value)
 	static Vector3 One(float value);
-	//returns Vector3(0,1,0)
+
+	//returns Vector3(0, 1, 0)
 	static Vector3 Up();
+	//returns Vector3(0, value, 0)
 	static Vector3 Up(float value);
-	//returns Vector3(0,-1,0)
+
+	//returns Vector3(0, -1, 0)
 	static Vector3 Down();
+	//returns Vector3(0, -value, 0)
 	static Vector3 Down(float value);
-	//returns Vector3(1,0,0)
+
+	//returns Vector3(1, 0, 0)
 	static Vector3 Right();
+	//returns Vector3(value, 0, 0)
 	static Vector3 Right(float value);
-	//returns Vector3(-1,0,0)
+
+	//returns Vector3(-1, 0, 0)
 	static Vector3 Left();
+	//returns Vector3(-value, 0, 0)
 	static Vector3 Left(float value);
-	//returns Vector3(0,0,1)
+
+	//returns Vector3(0, 0, 1)
 	static Vector3 Forward();
+	//returns Vector3(0, 0, value)
 	static Vector3 Forward(float value);
-	//returns Vector3(0,0,-1)
+
+	//returns Vector3(0, 0, -1)
 	static Vector3 Back();
+	//returns Vector3(0, 0, -value)
 	static Vector3 Back(float value);
 
-	//move linearly towards target
+	//move vector linearly towards target
 	void MoveTowards(Vector3 target, float maxDistanceDelta);
 
 	//returns next point in linearly interpolates to target
@@ -51,11 +64,13 @@ public:
 
 	//returns the squared length of this vector
 	float SqrMagnitude();
+
 	//returns the length of this vector
 	float Magnitude();
 
 	//returns this vector with a magnitude of 1
 	Vector3 Normalized();
+
 	//makes this vector have a magnitude of 1
 	void Normalize();
 
@@ -92,7 +107,9 @@ public:
 	Vector3& operator*=(const float & number);
 	Vector3& operator/=(const float & number);
 
+	//this is so we can access the vector using [] like in a array
 	float& operator[] (int i);
+
 	Vector3 operator!();
 
 	operator std::string() const;

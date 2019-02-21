@@ -1,19 +1,23 @@
 #include "GameObject.h"
 #include "Debug.h"
-#include <typeinfo>
 #include "Component.h"
 #include "Scene.h"
 #include "Engine.h"
+#include "Collider.h"
 
+//declare static field
 int GameObject::nextId = 0;
 
 GameObject::GameObject()
 {
+	//assign id and incress next id
 	id = nextId;
 	GameObject::nextId++;
 }
 GameObject::~GameObject()
 {
+	//free up memory used by the components on the game object
+
 	std::unordered_map<string, Component *>::iterator com = componentsCamera.begin();
 	while (com != componentsCamera.end())
 	{
@@ -46,6 +50,7 @@ float GameObject::GetDistanceToCamera()
 
 void GameObject::UpdateSelf(Scene * scene)
 {
+	//if there is an active camera find the distance to it
 	if (scene->activeCamera != nullptr)
 		distanceToCamera = transform.position.Distance(scene->activeCamera->gameObject->transform.position);
 }
@@ -121,100 +126,147 @@ bool GameObject::HasColliders()
 	return hasColliders;
 }
 
-Component * GameObject::AddComponent(Component * com)
+Component * GameObject::AddComponent(Component * component)
 {
-	if (com->GetName() == "Camera")
+	//if we are adding a camera component
+	if (component->GetName() == CameraComponentName)
 	{
-		if (componentsCamera.count(com->GetName()) != 0)
+		//check if we already have a component of this type on the game object
+		if (componentsCamera.count(component->GetName()) != 0)
 		{
-			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
-			return com;
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
+			return component;
 		}
-		componentsCamera.insert(std::pair<string, Component *>(com->GetName(), com));
+
+		//add the component
+		componentsCamera.insert(std::pair<string, Component *>(component->GetName(), component));
 	}
-	else if (com->GetName() == "Collider")
+
+	//if we are adding a collider component
+	else if (component->GetName() == ColliderComponentName)
 	{
-		if (componentsPhysics.count(com->GetName()) != 0)
+		//check if we already have a component of this type on the game object
+		if (componentsPhysics.count(component->GetName()) != 0)
 		{
-			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
-			return com;
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
+			return component;
 		}
-		componentsPhysics.insert(std::pair<string, Component *>(com->GetName(), com));
+
+		//add the component and set hasColliders to ture
+		componentsPhysics.insert(std::pair<string, Component *>(component->GetName(), component));
 		hasColliders = true;
 	}
+
+	//if we are adding a component that is not a camera or collider (normal)
 	else
 	{
-		if (componentsNormal.count(com->GetName()) != 0)
+		//check if we already have a component of this type on the game object
+		if (componentsNormal.count(component->GetName()) != 0)
 		{
-			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
-			return com;
+			Debug::Error("Trying to add same component to a game object twice. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
+			return component;
 		}
-		componentsNormal.insert(std::pair<string, Component *>(com->GetName(), com));
+
+		//add the component
+		componentsNormal.insert(std::pair<string, Component *>(component->GetName(), component));
 	}
-	com->gameObject = this;
-	return com;
+
+	//set the game object the components is on to this game object
+	component->gameObject = this;
+
+	return component;
 }
 Component * GameObject::GetComponent(string name)
 {
-	if (name == "Camera")
+	//if the component we want to get is a camera component
+	if (name == CameraComponentName)
 	{
+		//check if we have a component of this type on the game object
 		if (componentsCamera.count(name) != 1)
 		{
 			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + name);
 			return nullptr;
 		}
+
+		//return the component
 		return componentsCamera.find(name)->second;
 	}
-	else if (name == "Collider")
+
+	//if the component we want to get is a collider component
+	else if (name == ColliderComponentName)
 	{
+		//check if we have a component of this type on the game object
 		if (componentsPhysics.count(name) != 1)
 		{
 			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + name);
 			return nullptr;
 		}
+
+		//return the component
 		return componentsPhysics.find(name)->second;
 	}
+
+	//if the component we want to get is not a camera or collider (normal)
 	else
 	{
+		//check if we have a component of this type on the game object
 		if (componentsNormal.count(name) != 1)
 		{
 			Debug::Error("Trying to get component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + name);
 			return nullptr;
 		}
+
+		//return the component
 		return componentsNormal.find(name)->second;
 	}
 }
-void GameObject::RemoveComponent(Component * com)
+void GameObject::RemoveComponent(Component * component)
 {
-	if (com->GetName() == "Camera")
+	//if we want to remove a camera component
+	if (component->GetName() == CameraComponentName)
 	{
-		if (componentsCamera.count(com->GetName()) != 1)
+		//check if we have a component of this type on the game object
+		if (componentsCamera.count(component->GetName()) != 1)
 		{
-			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
 			return;
 		}
-		componentsCamera.erase(com->GetName());
+
+		//remove the component
+		componentsCamera.erase(component->GetName());
 	}
-	else if (com->GetName() == "Collider")
+
+	//if we want to remove a collider component
+	else if (component->GetName() == ColliderComponentName)
 	{
-		if (componentsPhysics.count(com->GetName()) != 1)
+		//check if we have a component of this type on the game object
+		if (componentsPhysics.count(component->GetName()) != 1)
 		{
-			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
 			return;
 		}
-		componentsPhysics.erase(com->GetName());
-		hasColliders = !componentsNormal.empty();
+
+		//remove the component
+		componentsPhysics.erase(component->GetName());
+
+		//if we have no colliders on the game object set hasColliders to false
+		hasColliders = !componentsPhysics.empty();
 	}
+
+	//if we want to remove a component that is not a camera or collider (normal)
 	else
 	{
-		if (componentsNormal.count(com->GetName()) != 1)
+		//check if we have a component of this type on the game object
+		if (componentsNormal.count(component->GetName()) != 1)
 		{
-			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + com->GetName());
+			Debug::Error("Trying to remove component that is not on the game object. Game Object ID: " + std::to_string(GetId()) + ". Component: " + component->GetName());
 			return;
 		}
-		componentsNormal.erase(com->GetName());
+
+		//remove the component
+		componentsNormal.erase(component->GetName());
 	}
-	com->gameObject = nullptr;
+	component->gameObject = nullptr;
 }
 
 int GameObject::GetId() const

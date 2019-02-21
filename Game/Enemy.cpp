@@ -191,7 +191,7 @@ void Enemy::HitByPlayer()
 		((Player*)player->GetComponent(PlayerComponentName))->GivePistol();
 
 		//disable the collider component on the enemy
-		gameObject->GetComponent(Collider().GetName())->enabled = false;
+		gameObject->GetComponent(ColliderComponentName)->enabled = false;
 
 		//reset the dead animation and change state to dead
 		deadAnimation.Reset();

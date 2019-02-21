@@ -10,15 +10,14 @@
 #include <iostream>
 #include "GameObject.h"
 
-Scene::Scene()
-{
-}
 Scene::~Scene()
 {
+	//free up memory used by game objects
 	for (auto gameObject = gameObjects.begin(); gameObject != gameObjects.end(); gameObject++)
 		delete *gameObject;
 	gameObjects.clear();
 
+	//free up memory used by ui elements
 	for (auto uiElement = uiElements.begin(); uiElement != uiElements.end(); uiElement++)
 		delete *uiElement;
 	uiElements.clear();
@@ -26,8 +25,10 @@ Scene::~Scene()
 
 void Scene::Update()
 {
+	//loop all game objects in the scene
 	std::vector<GameObject *>::iterator go = gameObjects.begin();
 	
+	//update the game object (no components)
 	while (go != gameObjects.end())
 	{
 		if ((*go)->enabled)
@@ -35,6 +36,7 @@ void Scene::Update()
 		go++;
 	}
 
+	//update normal components
 	go = gameObjects.begin();
 	while (go != gameObjects.end())
 	{
@@ -43,6 +45,7 @@ void Scene::Update()
 		go++;
 	}
 
+	//update physics components
 	go = gameObjects.begin();
 	while (go != gameObjects.end())
 	{
@@ -53,7 +56,7 @@ void Scene::Update()
 }
 void Scene::Draw()
 {
-	//draw camera
+	//update camera components
 	std::vector<GameObject *>::iterator go = gameObjects.begin();
 	while (go != gameObjects.end())
 	{
@@ -62,8 +65,10 @@ void Scene::Draw()
 		go++;
 	}
 
+	//sort game objects by distance to active camera
 	SortGameObjectsByDistanceToCamera();
-	//draw 1
+
+	//call draw1 on all game objects
 	go = gameObjects.begin();
 	while (go != gameObjects.end())
 	{
@@ -72,7 +77,7 @@ void Scene::Draw()
 		go++;
 	}
 
-	//draw 2
+	//call draw2 on all game objects
 	go = gameObjects.begin();
 	while (go != gameObjects.end())
 	{
@@ -84,20 +89,14 @@ void Scene::Draw()
 
 void Scene::UI()
 {
+	//set camera and matrix to "2d" so ui element position and size is not in world space but screen space
 	glMatrixMode(GL_PROJECTION_MATRIX);
 	glOrtho(0, Engine::I()->GetWindowSize().x, 0, Engine::I()->GetWindowSize().y, -1, 1);
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glDisable(GL_DEPTH_TEST);
-
+	
+	//loop ui elements and draw them
 	std::unordered_set<UIBase *>::iterator uiElement = uiElements.begin();
-	while (uiElement != uiElements.end())
-	{
-		if ((*uiElement)->enabled)
-			(*uiElement)->Update();
-		uiElement++;
-	}
-
-	uiElement = uiElements.begin();
 	while (uiElement != uiElements.end())
 	{
 		if ((*uiElement)->enabled)
@@ -110,12 +109,19 @@ void Scene::UI()
 
 void Scene::SortGameObjectsByDistanceToCamera()
 {
+	//if we have less than 2 game objects no need to sort them(it)
 	if (gameObjects.size() < 2)
 		return;
 
+	//if the amount of game objects have not changed since last frame no need to sort them so the one where distance to the camera is important is first.
 	if (lastGameObjectCount != gameObjects.size())
 	{
 		lastGameObjectCount = gameObjects.size();
+		
+		//we use bubble sort to order the game objects where distance to the camera is important first.
+		//we use some extra resources doing this once in awhile, so when we sort the important game objects every frame we can stop as soon as we reach a none important game object
+		//by doing it this way we avoid having to sort all the game objects including the ones that does not need sorting every frame
+
 		bool swapp = true;
 		while (swapp)
 		{
@@ -134,6 +140,7 @@ void Scene::SortGameObjectsByDistanceToCamera()
 		}
 	}
 
+	//we use bubble sort to order the game objects by their distance to the active camera
 	bool swapp = true;
 	while (swapp)
 	{
@@ -142,6 +149,7 @@ void Scene::SortGameObjectsByDistanceToCamera()
 		std::vector<GameObject *>::iterator go = gameObjects.begin();
 		while (go != gameObjects.end() - 1)
 		{
+			//if we have reached a game object where distance to the camera is not important we know that we have been through all the important game objects os we stop here
 			if (!(*go)->distanceToCameraIsImportant)
 				break;
 
@@ -155,18 +163,17 @@ void Scene::SortGameObjectsByDistanceToCamera()
 		}
 	}
 
-	endLoop:
 	return;
 }
 
-GameObject * Scene::AddGameObject(GameObject *go)
+GameObject * Scene::AddGameObject(GameObject * gameObject)
 {
-	gameObjects.push_back(go);
-	return go;
+	gameObjects.push_back(gameObject);
+	return gameObject;
 }
-void Scene::RemoveGameObject(GameObject * go)
+void Scene::RemoveGameObject(GameObject * gameObject)
 {
-	gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), go), gameObjects.end());
+	gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObject), gameObjects.end());
 }
 std::vector<GameObject *> * Scene::GetAllGameObjects()
 {

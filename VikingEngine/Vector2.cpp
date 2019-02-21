@@ -5,16 +5,10 @@
 #include "Debug.h"
 typedef std::basic_string<char> string;
 
-Vector2::Vector2()
-{
-}
 Vector2::Vector2(float x, float y)
 {
 	(*this).x = x;
 	(*this).y = y;
-}
-Vector2::~Vector2()
-{
 }
 
 Vector2 Vector2::One()
@@ -68,6 +62,7 @@ void Vector2::MoveTowards(Vector2 target, float maxDistanceDelta)
 	else
 		*this += Vector2 / magnitude * maxDistanceDelta;
 }
+
 Vector2 Vector2::Lerp(Vector2 target, float t)
 {
 	t = std::min(std::max(float(t), float(0)), float(1));
@@ -83,6 +78,7 @@ float Vector2::SqrMagnitude()
 {
 	return x * x + y * y;
 }
+
 float Vector2::Magnitude()
 {
 	return sqrt(SqrMagnitude());
@@ -94,6 +90,7 @@ Vector2 Vector2::Normalized()
 	normalized.Normalize();
 	return normalized;
 }
+
 void Vector2::Normalize()
 {
 	float num = Magnitude();

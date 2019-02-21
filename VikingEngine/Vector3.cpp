@@ -5,17 +5,11 @@
 #include "Debug.h"
 typedef std::basic_string<char> string;
 
-Vector3::Vector3()
-{
-}
 Vector3::Vector3(float x, float y, float z)
 {
 	(*this).x = x;
 	(*this).y = y;
 	(*this).z = z;
-}
-Vector3::~Vector3()
-{
 }
 
 Vector3 Vector3::One()
@@ -86,6 +80,7 @@ void Vector3::MoveTowards(Vector3 target, float maxDistanceDelta)
 	else
 		*this += vector3 / magnitude * maxDistanceDelta;
 }
+
 Vector3 Vector3::Lerp(Vector3 target, float t)
 {
 	t = std::min(std::max(float(t), float(0)), float(1));
@@ -108,6 +103,7 @@ float Vector3::SqrMagnitude()
 {
 	return x * x + y * y + z * z;
 }
+
 float Vector3::Magnitude()
 {
 	return sqrt(SqrMagnitude());
@@ -119,6 +115,7 @@ Vector3 Vector3::Normalized()
 	normalized.Normalize();
 	return normalized;
 }
+
 void Vector3::Normalize()
 {
 	float num = Magnitude();
@@ -134,6 +131,7 @@ Vector3 Vector3::Cross(Vector3 lhs, Vector3 rhs)
 {
 	return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x);
 }
+
 float Vector3::Dot(Vector3 lhs, Vector3 rhs)
 {
 	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;

@@ -7,12 +7,10 @@ typedef std::basic_string<char> string;
 //if true an ERROR() will allways throw an exception and stop the game
 #define ALLWAYS_THROW false
 
+//used to write debug messages to the visual studio output window
 class DLLEXTERN Debug
 {
 public:
-	Debug();
-	~Debug();
-
 	//write string to visual studio output window
 	static void Log(string text);
 	//write int to visual studio output window

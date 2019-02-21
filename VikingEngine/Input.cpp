@@ -8,9 +8,10 @@
 #include "Engine.h"
 #include "Time.h"
 
+//declare static fields
+GLFWwindow * Input::window;
 Vector2 Input::currentMousePosition;
 Vector2 Input::lastMousePosition;
-GLFWwindow * Input::window;
 std::map<int, bool> Input::hold = std::map<int, bool>();
 std::map<int, bool> Input::down = std::map<int, bool>();
 std::map<int, bool> Input::up	= std::map<int, bool>();
@@ -70,6 +71,9 @@ void Input::KeyInputCallback(GLFWwindow * window, int key, int scancode, int act
 void Input::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
 {
 	currentMousePosition = Vector2((float)xpos, Engine::I()->GetWindowSize().y - (float)ypos);
+
+	//if this is the first time we update the mouse position set last mouse position to the current mouse position
+	//we do this to avoid the mouse position making a big jump at the very start of the game
 	if (lastMousePosition == Vector2())
 		lastMousePosition = currentMousePosition;
 }
@@ -82,10 +86,13 @@ void Input::MouseClickCallback(GLFWwindow* window, int button, int action, int m
 void Input::Setup(GLFWwindow * window)
 {
 	Input::window = window;
+
+	//setup callback methods
 	glfwSetKeyCallback(window, Input::KeyInputCallback);
 	glfwSetCursorPosCallback(window, CursorPositionCallback);
 	glfwSetMouseButtonCallback(window, MouseClickCallback);
 
+	//add an entry for each key in our maps
 	for (int i = Input::Keys::A; i != Input::Keys::MENU; i++)
 	{
 		Input::Keys key = static_cast<Input::Keys>(i);
@@ -95,9 +102,9 @@ void Input::Setup(GLFWwindow * window)
 	}
 }
 
-void Input::EndLoop()
+void Input::ResetInput()
 {
-	//keys
+	//reset keyboard
 	std::map<int, bool>::iterator c_itr;
 	for (c_itr = down.begin(); c_itr != down.end(); ++c_itr)
 	{
@@ -112,5 +119,6 @@ void Input::EndLoop()
 	lastMousePosition = currentMousePosition;
 	mouseLeftClicked = false;
 	
+	//get new user inputs
 	glfwPollEvents();
 }

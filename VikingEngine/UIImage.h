@@ -6,20 +6,28 @@
 
 typedef std::basic_string<char> string;
 
+//use to draw images on the screen in 2d
 class UIImage : public UIBase
 {
 private:
+	//texture to draw
 	unsigned int texture;
-	float * texture_coord;
+	//used to decide what part of a texture to use and where to draw it
+	float * uvs;
+	//true if the uimage has a texture
 	bool hasTexture;
 
 public:
 
-	DLLEXTERN UIImage();
+	DLLEXTERN UIImage() { };
 	DLLEXTERN ~UIImage();
 
-	DLLEXTERN void SetTexture(string textureName, float * texture_coord);
+	//set texture
+	//texture: the texture we want to use
+	//uv: the uv we want to use
+	DLLEXTERN void SetTexture(string textureName, float * uv);
 
+	//draws the image to the screen. called every frame
 	void Draw();
 };
 
