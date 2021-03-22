@@ -1,5 +1,5 @@
-Wolfenstein Real 3D is basically just a worse version of Wolfenstein 3D, but this time it is actually in real 3D and not that fake ****.
-You start in a prison cell with a knife and a guard. Kill the guard, take his gun and kill some Nazis on your way out. You win the game by using the lever at the end of the level.
+You start in a prison cell with a knife and a guard. Kill the guard, take his gun and kill some Nazis on your way out.
+You win the game by using the lever at the end of the level.
 
 Controls
 	Escape: Toggle cursor visibility
@@ -23,10 +23,6 @@ Controls
     3: Toggle collider wireframe
     4: Toggle god mode (can't get hit by enemies and can go through walls)
     5: Reset game
-
-Themes
-    You have to escape and "Don't Die" on the way out.
-    As you play there are a lot of "Closed Doors" you have to open to escape.
 
 Known bugs
     Sometimes health is not displayed.
